@@ -43,6 +43,16 @@ public class VendingMachine {
     		} else {
     			this.display = "PRICE: $1.00";
     		}
+    	} else if (productStr.equals("chips")) {
+    		IProduct chips = new Chips();
+    		
+    		if (this.balance >= chips.getPrice()) {
+    			this.balance -= chips.getPrice();
+    			this.productReturn = chips;
+    			this.display = "THANK YOU";
+    		} else {
+    			this.display = "PRICE: $0.50";
+    		}
     	}
     }
 
