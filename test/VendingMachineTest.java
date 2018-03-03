@@ -30,4 +30,11 @@ public class VendingMachineTest {
     	
     	assertEquals(0.10, vendingMachine.getBalance());
     }
+    
+    @Test
+    public void whenUserInsertsAQuarterTheVendingMachineBalanceIsUpdated() {
+    	this.vendingMachine.insertCoin("quarter");
+    	
+    	assertEquals(0.25, vendingMachine.getBalance());
+    }
 }

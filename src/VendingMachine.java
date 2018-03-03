@@ -13,6 +13,8 @@ public class VendingMachine {
     		balance += 0.05;
     	} else if (coin.length() == 4) {  // Hopefully a dime
     		balance += 0.1;
+    	} else if (coin.length() == 7) {  // Hopefully a quarter
+    		balance += 0.25;
     	}
     }
 
