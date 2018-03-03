@@ -34,53 +34,44 @@ public class VendingMachine {
     
     public void pressButton(String productStr) {
     	if (productStr.equals("cola")) {
-    		IProduct cola = new Cola();
-    		
-    		if (this.balance >= cola.getPrice()) {
-    			this.balance -= cola.getPrice();
-    			this.productReturn = cola;
-    			this.display = "THANK YOU";
-    		} else {
-    			this.display = "PRICE: $1.00";
-    		}
+    		dispenseProduct(new Cola());
     	} else if (productStr.equals("chips")) {
-    		IProduct chips = new Chips();
-    		
-    		if (this.balance >= chips.getPrice()) {
-    			this.balance -= chips.getPrice();
-    			this.productReturn = chips;
-    			this.display = "THANK YOU";
-    		} else {
-    			this.display = "PRICE: $0.50";
-    		}
+    		dispenseProduct(new Chips());
     	} else if (productStr.equals("candy")) {
-    		IProduct candy = new Candy();
-    		
-    		if (this.balance >= candy.getPrice()) {
-    			this.balance -= candy.getPrice();
-    			this.productReturn = candy;
-    			this.display = "THANK YOU";
-    		} else {
-    			this.display = "PRICE: $0.65";
-    		}
+    		dispenseProduct(new Candy());
     	}
+    }
+    
+    protected String padPriceWithZero(Double price) {
+    	String priceStr = String.valueOf(price);
+    	// Check number of decimal places
+		int indexOfDecimal = priceStr.indexOf(".");
+		String decimalPlaces = priceStr.substring(indexOfDecimal + 1);
+		
+		// Add a '0' to the end of the display if balance only has one decimal place
+		if (decimalPlaces.length() < 2) {
+			priceStr += "0";
+		}
+		
+		return priceStr;
+    }
+    
+    private void dispenseProduct(IProduct product) {
+    	double price = product.getPrice();
+    	if (this.balance >= price) {
+			this.balance -= price;
+			this.productReturn = product;
+			this.display = "THANK YOU";
+		} else {
+			this.display = "PRICE: $" + padPriceWithZero(price);
+		}
     }
 
     private void updateDisplay() {
     	if (balance == 0.0) {
     		this.display = "INSERT COINS";
     	} else {
-    		String balanceStr = String.valueOf(this.balance);
-    		
-    		// Check number of decimal places
-    		int indexOfDecimal = balanceStr.indexOf(".");
-    		String decimalPlaces = balanceStr.substring(indexOfDecimal + 1);
-    		
-    		// Add a '0' to the end of the display if balance only has one decimal place
-    		if (decimalPlaces.length() < 2) {
-    			balanceStr += "0";
-    		}
-    		this.display = "$" + balanceStr;
+    		this.display = "$" + padPriceWithZero(this.balance);
     	}
     }
     

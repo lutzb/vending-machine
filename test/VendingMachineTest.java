@@ -150,4 +150,16 @@ public class VendingMachineTest {
     	assertEquals("THANK YOU", vendingMachine.checkDisplay());
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
     }
+    
+    // -------------- padPriceWithZero() tests -------------- 
+    
+    @Test
+    public void whenPadPriceWithZeroIsGivenADoubleDigitValueItReturnsThatValue() {
+    	assertEquals("0.15", vendingMachine.padPriceWithZero(0.15));
+    }
+    
+    @Test
+    public void whenPadPriceWithZeroIsGivenASingleDigitValueItReturnsThatValuePaddedWithAZero() {
+    	assertEquals("0.10", vendingMachine.padPriceWithZero(0.1));
+    }
 }
