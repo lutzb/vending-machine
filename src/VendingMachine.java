@@ -5,10 +5,13 @@ public class VendingMachine {
 	private double balance;
 	
 	private ArrayList<String> coinReturn;
+	
+	private boolean buttonPressed;
 
     public VendingMachine() {
     	this.balance = 0.0;
     	this.coinReturn = new ArrayList<String>();
+    	this.buttonPressed = false;
     }
     
     public void insertCoin(String coin) {
@@ -25,8 +28,12 @@ public class VendingMachine {
     }
 
     public String checkDisplay() {
-    	if (balance == 0.0) {
+    	if (balance == 0.0 && !buttonPressed) {
     		return "INSERT COINS";	
+    	} else if (buttonPressed) {
+    		this.buttonPressed = false;
+    		return "PRICE: $1.00";
+    		
     	} else {
     		String balanceStr = String.valueOf(this.balance);
     		
@@ -40,6 +47,10 @@ public class VendingMachine {
     		}
     		return "$" + balanceStr;
     	}
+    }
+    
+    public void pressButton(String productStr) {
+    	this.buttonPressed = true;
     }
     
     public ArrayList<String> getCoinReturn() {
