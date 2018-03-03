@@ -18,28 +18,35 @@ public class VendingMachineTest {
     }
     
     @Test
-    public void whenUserInsertsANickelTheVendingMachineBalanceIsUpdated() {
+    public void whenUserInsetsAPennyVendingMachineDisplaysInsertCoinsMessage() {
+    	this.vendingMachine.insertCoin("penny");
+    	
+    	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
+    }
+    
+    @Test
+    public void whenUserInsertsANickelTheVendingMachineBalanceIsUpdatedToFiveCents() {
     	this.vendingMachine.insertCoin("nickel");
     	
     	assertEquals("$0.05", vendingMachine.checkDisplay());
     }
     
     @Test
-    public void whenUserInsertsADimeTheVendingMachineBalanceIsUpdated() {
+    public void whenUserInsertsADimeTheVendingMachineBalanceIsUpdatedToTenCents() {
     	this.vendingMachine.insertCoin("dime");
     	
     	assertEquals("$0.10", vendingMachine.checkDisplay());
     }
     
     @Test
-    public void whenUserInsertsAQuarterTheVendingMachineBalanceIsUpdated() {
+    public void whenUserInsertsAQuarterTheVendingMachineBalanceIsUpdatedToTwentyFiveCents() {
     	this.vendingMachine.insertCoin("quarter");
     	
     	assertEquals("$0.25", vendingMachine.checkDisplay());
     }
     
     @Test
-    public void whenUserInsertsAQuarterAndDimeTheVendingMachineBalanceIsUpdated() {
+    public void whenUserInsertsAQuarterAndDimeTheVendingMachineBalanceIsUpdatedToThirtyFiveCents() {
     	this.vendingMachine.insertCoin("quarter");
     	this.vendingMachine.insertCoin("dime");
     	
@@ -47,7 +54,7 @@ public class VendingMachineTest {
     }
     
     @Test
-    public void whenUserInsertsFourQuartersTheVendingMachineBalanceIsUpdated() {
+    public void whenUserInsertsFourQuartersTheVendingMachineBalanceIsUpdatedToOneDollar() {
     	this.vendingMachine.insertCoin("quarter");
     	this.vendingMachine.insertCoin("quarter");
     	this.vendingMachine.insertCoin("quarter");
