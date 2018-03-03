@@ -1,10 +1,14 @@
+import java.util.ArrayList;
+
 public class VendingMachine {
 	
 	private double balance;
+	
+	private ArrayList<String> coinReturn;
 
     public VendingMachine() {
     	this.balance = 0.0;
-    	System.out.println(checkDisplay());
+    	this.coinReturn = new ArrayList<String>();
     }
     
     public void insertCoin(String coin) {
@@ -15,6 +19,8 @@ public class VendingMachine {
     		balance += 0.1;
     	} else if (coin.length() == 7) {  // Hopefully a quarter
     		balance += 0.25;
+    	} else {
+    		coinReturn.add(coin);
     	}
     }
 
@@ -34,5 +40,9 @@ public class VendingMachine {
     		}
     		return "$" + balanceStr;
     	}
+    }
+    
+    public ArrayList<String> getCoinReturn() {
+    	return this.coinReturn;
     }
 }

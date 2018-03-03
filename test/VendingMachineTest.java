@@ -1,7 +1,9 @@
+import static junit.framework.TestCase.assertEquals;
+
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
-
-import static junit.framework.TestCase.assertEquals;
 
 public class VendingMachineTest {
 
@@ -18,10 +20,22 @@ public class VendingMachineTest {
     }
     
     @Test
-    public void whenUserInsetsAPennyVendingMachineDisplaysInsertCoinsMessage() {
+    public void whenAnUnrecognizedCoinIsInsertedVendingMachineReturnsIt() {
+    	this.vendingMachine.insertCoin("fake coin");
+    	ArrayList<String> coinReturn = this.vendingMachine.getCoinReturn();
+    	
+    	assertEquals(1, coinReturn.size());
+    	assertEquals("fake coin", coinReturn.get(0));
+    }
+    
+    @Test
+    public void whenUserInsetsAPennyVendingMachineDisplaysInsertCoinsMessageAndReturnsCoin() {
     	this.vendingMachine.insertCoin("penny");
+    	ArrayList<String> coinReturn = this.vendingMachine.getCoinReturn();
     	
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
+    	assertEquals(1, coinReturn.size());
+    	assertEquals("penny", coinReturn.get(0));
     }
     
     @Test
