@@ -40,9 +40,11 @@ public class VendingMachine {
     	} else if (productStr.equals("candy")) {
     		dispenseProduct(new Candy());
     	}
+    	
+    	returnChange();
     }
-    
-    protected String padPriceWithZero(Double price) {
+
+	protected String padPriceWithZero(Double price) {
     	String priceStr = String.valueOf(price);
     	// Check number of decimal places
 		int indexOfDecimal = priceStr.indexOf(".");
@@ -68,12 +70,19 @@ public class VendingMachine {
     }
 
     private void updateDisplay() {
-    	if (balance == 0.0) {
+    	if (this.balance == 0.0) {
     		this.display = "INSERT COINS";
     	} else {
     		this.display = "$" + padPriceWithZero(this.balance);
     	}
     }
+    
+    private void returnChange() {
+    	while (this.balance >= 0.25) {
+    		coinReturn.add("quarter");
+    		this.balance -= 0.25;
+    	}
+	}
     
     public IProduct getProductReturn() {
     	return this.productReturn;

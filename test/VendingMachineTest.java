@@ -73,13 +73,30 @@ public class VendingMachineTest {
     }
     
     @Test
-    public void whenUserInsetsAPennyVendingMachineDisplaysInsertCoinsMessageAndReturnsIt() {
+    public void whenUserInsertsAPennyVendingMachineDisplaysInsertCoinsMessageAndReturnsIt() {
     	this.vendingMachine.insertCoin("penny");
     	ArrayList<String> coinReturn = this.vendingMachine.getCoinReturn();
     	
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
     	assertEquals(1, coinReturn.size());
     	assertEquals("penny", coinReturn.get(0));
+    }
+    
+    @Test
+    public void whenUserInsertsMoreChangeThanTheCostOfAProductVendingMachineReturnsTheUsersChange() {
+    	this.vendingMachine.insertCoin("quarter");
+    	this.vendingMachine.insertCoin("quarter");
+    	this.vendingMachine.insertCoin("quarter");
+    	this.vendingMachine.insertCoin("quarter");
+    	
+    	this.vendingMachine.pressButton("chips");
+    	ArrayList<String> coinReturn = this.vendingMachine.getCoinReturn();
+    	
+    	assertEquals("THANK YOU", vendingMachine.checkDisplay());
+    	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
+    	assertEquals(2, coinReturn.size());
+    	assertEquals("quarter", coinReturn.get(0));
+    	assertEquals("quarter", coinReturn.get(1));
     }
     
 	// -------------- pressButton() tests --------------
