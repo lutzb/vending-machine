@@ -46,6 +46,9 @@ public class VendingMachine {
     		dispenseProduct(new Chips());
     	} else if (productStr.equals("candy")) {
     		dispenseProduct(new Candy());
+    	} else if (productStr.equals("returnChange")) {
+    		returnChange();
+    		updateDisplay();
     	}
     }
 

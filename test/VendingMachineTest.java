@@ -188,6 +188,26 @@ public class VendingMachineTest {
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
     }
     
+    
+    @Test
+    public void whenTheUserInsertsCoinsThenPressesReturnChangeButtonVendingMachineReturnsTheUsersChange() {
+    	this.vendingMachine.insertCoin("quarter");
+    	this.vendingMachine.insertCoin("quarter");
+    	this.vendingMachine.insertCoin("dime");
+    	this.vendingMachine.insertCoin("nickle");
+    	
+    	this.vendingMachine.pressButton("returnChange");
+    	
+    	ArrayList<String> coinReturn = this.vendingMachine.getCoinReturn();
+
+    	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
+    	assertEquals(4, coinReturn.size());
+    	assertEquals("quarter", coinReturn.get(0));
+    	assertEquals("quarter", coinReturn.get(1));
+    	assertEquals("dime", coinReturn.get(2));
+    	assertEquals("nickel", coinReturn.get(3));
+    }
+    
     // -------------- padPriceWithZero() tests -------------- 
     
     @Test
