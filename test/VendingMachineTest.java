@@ -10,4 +10,12 @@ public class VendingMachineTest {
 
         assertEquals("INSERT COINS", vendingMachine.getDisplayMessage());
     }
+    
+    @Test
+    public void whenUserInsertsANickleVendingMachineBalanceIsUpdated() {
+    	VendingMachine vendingMachine = new VendingMachine();
+    	vendingMachine.insertCoin("nickel");
+    	
+    	assertEquals(0.05, vendingMachine.getBalance());
+    }
 }
