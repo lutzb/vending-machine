@@ -4,7 +4,7 @@ public class VendingMachine {
 
     public VendingMachine() {
     	this.balance = 0.0;
-    	System.out.println(getDisplayMessage());
+    	System.out.println(checkDisplay());
     }
     
     public void insertCoin(String coin) {
@@ -18,11 +18,21 @@ public class VendingMachine {
     	}
     }
 
-    public String getDisplayMessage() {
-        return "INSERT COINS";
-    }
-    
-    public double getBalance() {
-    	return this.balance;
+    public String checkDisplay() {
+    	if (balance == 0.0) {
+    		return "INSERT COINS";	
+    	} else {
+    		String balanceStr = String.valueOf(this.balance);
+    		
+    		// Check number of decimal places
+    		int indexOfDecimal = balanceStr.indexOf(".");
+    		String decimalPlaces = balanceStr.substring(indexOfDecimal + 1);
+    		
+    		// Add a '0' to the end of the display if balance only has one decimal place
+    		if (decimalPlaces.length() < 2) {
+    			balanceStr += "0";
+    		}
+    		return "$" + balanceStr;
+    	}
     }
 }
