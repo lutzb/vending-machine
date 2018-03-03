@@ -1,8 +1,9 @@
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class VendingMachine {
 	
-	private double balance;
+	private BigDecimal balance;
 	
 	private ArrayList<String> coinReturn;
 	
@@ -11,20 +12,26 @@ public class VendingMachine {
 	private String display;
 
     public VendingMachine() {
-    	this.balance = 0.0;
+    	this.balance = new BigDecimal("0.0");
     	this.coinReturn = new ArrayList<String>();
     	this.productReturn = null;
     	this.display = "INSERT COINS";
     }
     
+    public String checkDisplay() {
+    	String currentDisplay = display;
+    	updateDisplay();
+    	return currentDisplay;
+    }
+    
     public void insertCoin(String coin) {
     	// Assign coin value based on weight
     	if (coin.length() == 6) {  // Hopefully a nickel
-    		balance += 0.05;
+    		balance = balance.add(new BigDecimal("0.05"));
     	} else if (coin.length() == 4) {  // Hopefully a dime
-    		balance += 0.1;
+    		balance = balance.add(new BigDecimal("0.10"));
     	} else if (coin.length() == 7) {  // Hopefully a quarter
-    		balance += 0.25;
+    		balance = balance.add(new BigDecimal("0.25"));
     	} else {
     		coinReturn.add(coin);
     	}
@@ -40,11 +47,9 @@ public class VendingMachine {
     	} else if (productStr.equals("candy")) {
     		dispenseProduct(new Candy());
     	}
-    	
-    	returnChange();
     }
 
-	protected String padPriceWithZero(Double price) {
+	protected String padPriceWithZero(BigDecimal price) {
     	String priceStr = String.valueOf(price);
     	// Check number of decimal places
 		int indexOfDecimal = priceStr.indexOf(".");
@@ -59,28 +64,37 @@ public class VendingMachine {
     }
     
     private void dispenseProduct(IProduct product) {
-    	double price = product.getPrice();
-    	if (this.balance >= price) {
-			this.balance -= price;
-			this.productReturn = product;
-			this.display = "THANK YOU";
+    	BigDecimal productPrice = product.getPrice();
+    	if (balance.compareTo(productPrice) >= 0) {
+    		balance = balance.subtract(productPrice);
+			productReturn = product;
+			display = "THANK YOU";
+			returnChange();
 		} else {
-			this.display = "PRICE: $" + padPriceWithZero(price);
+			display = "PRICE: $" + padPriceWithZero(productPrice);
 		}
     }
 
     private void updateDisplay() {
-    	if (this.balance == 0.0) {
-    		this.display = "INSERT COINS";
+    	if (balance.compareTo(new BigDecimal("0.0")) == 0) {
+    		display = "INSERT COINS";
     	} else {
-    		this.display = "$" + padPriceWithZero(this.balance);
+    		display = "$" + padPriceWithZero(balance);
     	}
     }
     
     private void returnChange() {
-    	while (this.balance >= 0.25) {
+    	while (balance.compareTo(new BigDecimal("0.25")) >= 0) {
     		coinReturn.add("quarter");
-    		this.balance -= 0.25;
+    		balance = balance.subtract(new BigDecimal("0.25"));
+    	}
+    	while (balance.compareTo(new BigDecimal("0.10")) >= 0) {
+    		coinReturn.add("dime");
+    		balance = balance.subtract(new BigDecimal("0.10"));
+    	}
+    	while (balance.compareTo(new BigDecimal("0.05")) >= 0) {
+    		coinReturn.add("nickel");
+    		balance = balance.subtract(new BigDecimal("0.05"));
     	}
 	}
     
@@ -90,11 +104,5 @@ public class VendingMachine {
     
     public ArrayList<String> getCoinReturn() {
     	return this.coinReturn;
-    }
-    
-    public String checkDisplay() {
-    	String current = this.display;
-    	updateDisplay();
-    	return current;
     }
 }

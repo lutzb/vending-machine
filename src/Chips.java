@@ -1,20 +1,21 @@
+import java.math.BigDecimal;
 
 public class Chips implements IProduct {
 
 	private String type;
 	
-	private double price;
+	private BigDecimal price;
 	
 	public Chips() {
 		this.type = "chips";
-		this.price = 0.50;
+		this.price = new BigDecimal("0.50");
 	}
 	
 	public String getType() {
 		return this.type;
 	}
 
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return this.price;
 	}
 

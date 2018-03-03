@@ -1,5 +1,6 @@
 import static junit.framework.TestCase.assertEquals;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -83,7 +84,7 @@ public class VendingMachineTest {
     }
     
     @Test
-    public void whenUserInsertsMoreChangeThanTheCostOfAProductVendingMachineReturnsTheUsersChange() {
+    public void whenUserInsertsMoreQuartersThanTheCostOfChipsVendingMachineReturnsTheUsersChange() {
     	this.vendingMachine.insertCoin("quarter");
     	this.vendingMachine.insertCoin("quarter");
     	this.vendingMachine.insertCoin("quarter");
@@ -97,6 +98,25 @@ public class VendingMachineTest {
     	assertEquals(2, coinReturn.size());
     	assertEquals("quarter", coinReturn.get(0));
     	assertEquals("quarter", coinReturn.get(1));
+    }
+    
+    @Test
+    public void whenUserInsertsAVarietyOfChangeMoreThanTheCostOfChipsVendingMachineReturnsTheUsersChange() {
+    	this.vendingMachine.insertCoin("quarter");
+    	this.vendingMachine.insertCoin("quarter");
+    	this.vendingMachine.insertCoin("quarter");
+    	this.vendingMachine.insertCoin("dime");
+    	this.vendingMachine.insertCoin("nickel");
+    	
+    	this.vendingMachine.pressButton("chips");
+    	ArrayList<String> coinReturn = this.vendingMachine.getCoinReturn();
+    	
+    	assertEquals("THANK YOU", vendingMachine.checkDisplay());
+    	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
+    	assertEquals(3, coinReturn.size());
+    	assertEquals("quarter", coinReturn.get(0));
+    	assertEquals("dime", coinReturn.get(1));
+    	assertEquals("nickel", coinReturn.get(2));
     }
     
 	// -------------- pressButton() tests --------------
@@ -172,11 +192,11 @@ public class VendingMachineTest {
     
     @Test
     public void whenPadPriceWithZeroIsGivenADoubleDigitValueItReturnsThatValue() {
-    	assertEquals("0.15", vendingMachine.padPriceWithZero(0.15));
+    	assertEquals("0.15", vendingMachine.padPriceWithZero(new BigDecimal("0.15")));
     }
     
     @Test
     public void whenPadPriceWithZeroIsGivenASingleDigitValueItReturnsThatValuePaddedWithAZero() {
-    	assertEquals("0.10", vendingMachine.padPriceWithZero(0.1));
+    	assertEquals("0.10", vendingMachine.padPriceWithZero(new BigDecimal("0.1")));
     }
 }

@@ -1,8 +1,9 @@
+import java.math.BigDecimal;
 
 public interface IProduct {
 	
 	public String getType();
 	
-	public double getPrice();
+	public BigDecimal getPrice();
 	
 }
