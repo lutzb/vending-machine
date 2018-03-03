@@ -33,6 +33,8 @@ public class VendingMachineProductsTest {
     	ArrayList<IProduct> productReturn = this.vendingMachine.getProductReturn();
     	assertEquals(1, productReturn.size());
     	assertEquals("cola", productReturn.get(0).getType());
+    	assertEquals("THANK YOU", vendingMachine.checkDisplay());
+    	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
     }
 
 }

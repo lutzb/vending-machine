@@ -8,13 +8,13 @@ public class VendingMachine {
 	
 	private ArrayList<IProduct> productReturn;
 	
-	private boolean buttonPressed;
+	private String display;
 
     public VendingMachine() {
     	this.balance = 0.0;
     	this.coinReturn = new ArrayList<String>();
     	this.productReturn = new ArrayList<IProduct>();
-    	this.buttonPressed = false;
+    	this.display = "INSERT COINS";
     }
     
     public void insertCoin(String coin) {
@@ -28,15 +28,13 @@ public class VendingMachine {
     	} else {
     		coinReturn.add(coin);
     	}
+    	
+    	updateDisplay();
     }
 
-    public String checkDisplay() {
-    	if (balance == 0.0 && !buttonPressed) {
-    		return "INSERT COINS";	
-    	} else if (buttonPressed) {
-    		this.buttonPressed = false;
-    		return "PRICE: $1.00";
-    		
+    private void updateDisplay() {
+    	if (balance == 0.0) {
+    		this.display = "INSERT COINS";
     	} else {
     		String balanceStr = String.valueOf(this.balance);
     		
@@ -48,17 +46,22 @@ public class VendingMachine {
     		if (decimalPlaces.length() < 2) {
     			balanceStr += "0";
     		}
-    		return "$" + balanceStr;
+    		this.display = "$" + balanceStr;
     	}
     }
     
     public void pressButton(String productStr) {
     	if (productStr.equals("cola")) {
-    		IProduct colaProd = new Cola();
-    		this.productReturn.add(colaProd);
+    		IProduct cola = new Cola();
+    		
+    		if (this.balance >= cola.getPrice()) {
+    			this.balance -= cola.getPrice();
+    			this.productReturn.add(cola);
+    			this.display = "THANK YOU";
+    		} else {
+    			this.display = "PRICE: $1.00";
+    		}
     	}
-    	
-    	this.buttonPressed = true;
     }
     
     public ArrayList<IProduct> getProductReturn() {
@@ -67,5 +70,11 @@ public class VendingMachine {
     
     public ArrayList<String> getCoinReturn() {
     	return this.coinReturn;
+    }
+    
+    public String checkDisplay() {
+    	String current = this.display;
+    	updateDisplay();
+    	return current;
     }
 }
