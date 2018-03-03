@@ -76,11 +76,4 @@ public class VendingMachineTest {
     	
     	assertEquals("$1.00", vendingMachine.checkDisplay());
     }
-    
-    @Test
-    public void whenUserTriesToBuyColaWithoutInsertingAnyMoneyVendingMachineReturnsThePriceOfCola() {
-    	this.vendingMachine.pressButton("cola");
-    	
-    	assertEquals("PRICE: $1.00", vendingMachine.checkDisplay());
-    }
 }

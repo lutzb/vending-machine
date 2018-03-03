@@ -6,11 +6,14 @@ public class VendingMachine {
 	
 	private ArrayList<String> coinReturn;
 	
+	private ArrayList<IProduct> productReturn;
+	
 	private boolean buttonPressed;
 
     public VendingMachine() {
     	this.balance = 0.0;
     	this.coinReturn = new ArrayList<String>();
+    	this.productReturn = new ArrayList<IProduct>();
     	this.buttonPressed = false;
     }
     
@@ -50,7 +53,16 @@ public class VendingMachine {
     }
     
     public void pressButton(String productStr) {
+    	if (productStr.equals("cola")) {
+    		IProduct colaProd = new Cola();
+    		this.productReturn.add(colaProd);
+    	}
+    	
     	this.buttonPressed = true;
+    }
+    
+    public ArrayList<IProduct> getProductReturn() {
+    	return this.productReturn;
     }
     
     public ArrayList<String> getCoinReturn() {
