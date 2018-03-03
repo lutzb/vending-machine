@@ -31,6 +31,20 @@ public class VendingMachine {
     	
     	updateDisplay();
     }
+    
+    public void pressButton(String productStr) {
+    	if (productStr.equals("cola")) {
+    		IProduct cola = new Cola();
+    		
+    		if (this.balance >= cola.getPrice()) {
+    			this.balance -= cola.getPrice();
+    			this.productReturn.add(cola);
+    			this.display = "THANK YOU";
+    		} else {
+    			this.display = "PRICE: $1.00";
+    		}
+    	}
+    }
 
     private void updateDisplay() {
     	if (balance == 0.0) {
@@ -47,20 +61,6 @@ public class VendingMachine {
     			balanceStr += "0";
     		}
     		this.display = "$" + balanceStr;
-    	}
-    }
-    
-    public void pressButton(String productStr) {
-    	if (productStr.equals("cola")) {
-    		IProduct cola = new Cola();
-    		
-    		if (this.balance >= cola.getPrice()) {
-    			this.balance -= cola.getPrice();
-    			this.productReturn.add(cola);
-    			this.display = "THANK YOU";
-    		} else {
-    			this.display = "PRICE: $1.00";
-    		}
     	}
     }
     
