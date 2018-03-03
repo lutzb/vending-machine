@@ -6,14 +6,14 @@ public class VendingMachine {
 	
 	private ArrayList<String> coinReturn;
 	
-	private ArrayList<IProduct> productReturn;
+	private IProduct productReturn;
 	
 	private String display;
 
     public VendingMachine() {
     	this.balance = 0.0;
     	this.coinReturn = new ArrayList<String>();
-    	this.productReturn = new ArrayList<IProduct>();
+    	this.productReturn = null;
     	this.display = "INSERT COINS";
     }
     
@@ -38,7 +38,7 @@ public class VendingMachine {
     		
     		if (this.balance >= cola.getPrice()) {
     			this.balance -= cola.getPrice();
-    			this.productReturn.add(cola);
+    			this.productReturn = cola;
     			this.display = "THANK YOU";
     		} else {
     			this.display = "PRICE: $1.00";
@@ -64,7 +64,7 @@ public class VendingMachine {
     	}
     }
     
-    public ArrayList<IProduct> getProductReturn() {
+    public IProduct getProductReturn() {
     	return this.productReturn;
     }
     

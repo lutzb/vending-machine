@@ -101,9 +101,8 @@ public class VendingMachineTest {
     	
     	this.vendingMachine.pressButton("cola");
     	
-    	ArrayList<IProduct> productReturn = this.vendingMachine.getProductReturn();
-    	assertEquals(1, productReturn.size());
-    	assertEquals("cola", productReturn.get(0).getType());
+    	IProduct productReturn = this.vendingMachine.getProductReturn();
+    	assertEquals("cola", productReturn.getType());
     	assertEquals("THANK YOU", vendingMachine.checkDisplay());
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
     }
