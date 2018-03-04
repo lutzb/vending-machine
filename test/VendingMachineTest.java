@@ -237,7 +237,7 @@ public class VendingMachineTest {
     	
     	this.vendingMachine.pressButton("cola");
     	
-    	assertEquals("OUT OF STOCK", vendingMachine.checkDisplay());
+    	assertEquals("SOLD OUT", vendingMachine.checkDisplay());
     	assertEquals("$1.00", vendingMachine.checkDisplay());
     	
     }

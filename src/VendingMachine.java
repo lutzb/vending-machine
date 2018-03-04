@@ -83,7 +83,7 @@ public class VendingMachine {
 			display = "THANK YOU";
 			returnChange();
 		} else if (inventory.get(productType).getValue() == 0) {
-			display = "OUT OF STOCK";
+			display = "SOLD OUT";
 		} else {
 			display = "PRICE: $" + padPriceWithZero(productPrice);
 		}
