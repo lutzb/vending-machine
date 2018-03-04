@@ -13,7 +13,7 @@ public class VendingMachineTest {
 	@Before
 	public void setup () {
 		// Vending Machine will start with 5 of each coin
-		this.vendingMachine = new VendingMachine(5, 5, 5);
+		vendingMachine = new VendingMachine(5, 5, 5);
 	}
 	
 	// -------------- checkDisplay() tests -------------- 
@@ -25,39 +25,39 @@ public class VendingMachineTest {
     
     @Test
     public void whenUserInsertsANickelTheVendingMachineDisplaysABalanceOfFiveCents() {
-    	this.vendingMachine.insertCoin("nickel");
+    	vendingMachine.insertCoin("nickel");
     	
     	assertEquals("$0.05", vendingMachine.checkDisplay());
     }
     
     @Test
     public void whenUserInsertsADimeTheVendingMachineDisplaysABalanceOfTenCents() {
-    	this.vendingMachine.insertCoin("dime");
+    	vendingMachine.insertCoin("dime");
     	
     	assertEquals("$0.10", vendingMachine.checkDisplay());
     }
     
     @Test
     public void whenUserInsertsAQuarterTheVendingMachineDisplaysABalanceOfTwentyFiveCents() {
-    	this.vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
     	
     	assertEquals("$0.25", vendingMachine.checkDisplay());
     }
     
     @Test
     public void whenUserInsertsAQuarterAndADimeTheVendingMachineDisplaysABalanceOfThirtyFiveCents() {
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("dime");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("dime");
     	
     	assertEquals("$0.35", vendingMachine.checkDisplay());
     }
     
     @Test
     public void whenUserInsertsFourQuartersTheVendingMachineDisplaysABalanceOfOneDollar() {
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
     	
     	assertEquals("$1.00", vendingMachine.checkDisplay());
     }
@@ -66,8 +66,8 @@ public class VendingMachineTest {
     
     @Test
     public void whenUserInsertsAnUnrecognizedCoinVendingMachineDisplaysInsertCoinsMessageAndReturnsIt() {
-    	this.vendingMachine.insertCoin("fake coin");
-    	ArrayList<String> coinReturn = this.vendingMachine.getCoinReturn();
+    	vendingMachine.insertCoin("fake coin");
+    	ArrayList<String> coinReturn = vendingMachine.getCoinReturn();
     	
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
     	assertEquals(1, coinReturn.size());
@@ -76,8 +76,8 @@ public class VendingMachineTest {
     
     @Test
     public void whenUserInsertsAPennyVendingMachineDisplaysInsertCoinsMessageAndReturnsIt() {
-    	this.vendingMachine.insertCoin("penny");
-    	ArrayList<String> coinReturn = this.vendingMachine.getCoinReturn();
+    	vendingMachine.insertCoin("penny");
+    	ArrayList<String> coinReturn = vendingMachine.getCoinReturn();
     	
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
     	assertEquals(1, coinReturn.size());
@@ -86,13 +86,13 @@ public class VendingMachineTest {
     
     @Test
     public void whenUserInsertsMoreQuartersThanTheCostOfChipsVendingMachineReturnsTheUsersChange() {
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
     	
-    	this.vendingMachine.pressButton("chips");
-    	ArrayList<String> coinReturn = this.vendingMachine.getCoinReturn();
+    	vendingMachine.pressButton("chips");
+    	ArrayList<String> coinReturn = vendingMachine.getCoinReturn();
     	
     	assertEquals("THANK YOU", vendingMachine.checkDisplay());
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
@@ -103,14 +103,14 @@ public class VendingMachineTest {
     
     @Test
     public void whenUserInsertsAVarietyOfChangeMoreThanTheCostOfChipsVendingMachineReturnsTheUsersChange() {
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("dime");
-    	this.vendingMachine.insertCoin("nickel");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("dime");
+    	vendingMachine.insertCoin("nickel");
     	
-    	this.vendingMachine.pressButton("chips");
-    	ArrayList<String> coinReturn = this.vendingMachine.getCoinReturn();
+    	vendingMachine.pressButton("chips");
+    	ArrayList<String> coinReturn = vendingMachine.getCoinReturn();
     	
     	assertEquals("THANK YOU", vendingMachine.checkDisplay());
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
@@ -124,7 +124,7 @@ public class VendingMachineTest {
     
     @Test
     public void whenUserPressesColaButtonWithoutInsertingAnyMoneyVendingMachineDisplaysThePriceOfColaThenResetsTheDisplay() {
-    	this.vendingMachine.pressButton("cola");
+    	vendingMachine.pressButton("cola");
     	
     	assertEquals("PRICE: $1.00", vendingMachine.checkDisplay());
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
@@ -132,7 +132,7 @@ public class VendingMachineTest {
     
     @Test
     public void whenUserPressesChipsButtonWithoutInsertingAnyMoneyVendingMachineDisplaysThePriceOfChipsThenResetsTheDisplay() {
-    	this.vendingMachine.pressButton("chips");
+    	vendingMachine.pressButton("chips");
     	
     	assertEquals("PRICE: $0.50", vendingMachine.checkDisplay());
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
@@ -140,7 +140,7 @@ public class VendingMachineTest {
     
     @Test
     public void whenUserPressesCandyButtonWithoutInsertingAnyMoneyVendingMachineDisplaysThePriceOfCandyThenResetsTheDisplay() {
-    	this.vendingMachine.pressButton("candy");
+    	vendingMachine.pressButton("candy");
     	
     	assertEquals("PRICE: $0.65", vendingMachine.checkDisplay());
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
@@ -148,14 +148,14 @@ public class VendingMachineTest {
     
     @Test
     public void whenUserInsertsExactChangeAndPressesColaButtonVendingMachineDispensesCola() {
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
     	
-    	this.vendingMachine.pressButton("cola");
+    	vendingMachine.pressButton("cola");
     	
-    	IProduct productReturn = this.vendingMachine.getProductReturn();
+    	IProduct productReturn = vendingMachine.getProductReturn();
     	assertEquals("cola", productReturn.getType());
     	assertEquals("THANK YOU", vendingMachine.checkDisplay());
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
@@ -163,12 +163,12 @@ public class VendingMachineTest {
     
     @Test
     public void whenUserInsertsExactChangeAndPressesChipsButtonVendingMachineDispensesChips() {
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
     	
-    	this.vendingMachine.pressButton("chips");
+    	vendingMachine.pressButton("chips");
     	
-    	IProduct productReturn = this.vendingMachine.getProductReturn();
+    	IProduct productReturn = vendingMachine.getProductReturn();
     	assertEquals("chips", productReturn.getType());
     	assertEquals("THANK YOU", vendingMachine.checkDisplay());
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
@@ -176,14 +176,14 @@ public class VendingMachineTest {
     
     @Test
     public void whenUserInsertsExactChangeAndPressesCandyButtonVendingMachineDispensesCandy() {
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("dime");
-    	this.vendingMachine.insertCoin("nickel");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("dime");
+    	vendingMachine.insertCoin("nickel");
     	
-    	this.vendingMachine.pressButton("candy");
+    	vendingMachine.pressButton("candy");
     	
-    	IProduct productReturn = this.vendingMachine.getProductReturn();
+    	IProduct productReturn = vendingMachine.getProductReturn();
     	assertEquals("candy", productReturn.getType());
     	assertEquals("THANK YOU", vendingMachine.checkDisplay());
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
@@ -192,14 +192,14 @@ public class VendingMachineTest {
     
     @Test
     public void whenTheUserInsertsCoinsThenPressesReturnChangeButtonVendingMachineReturnsTheUsersChange() {
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("dime");
-    	this.vendingMachine.insertCoin("nickle");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("dime");
+    	vendingMachine.insertCoin("nickle");
     	
-    	this.vendingMachine.pressButton("returnChange");
+    	vendingMachine.pressButton("returnChange");
     	
-    	ArrayList<String> coinReturn = this.vendingMachine.getCoinReturn();
+    	ArrayList<String> coinReturn = vendingMachine.getCoinReturn();
 
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
     	assertEquals(4, coinReturn.size());
@@ -211,32 +211,32 @@ public class VendingMachineTest {
     
     @Test
     public void whenTheUserBuysAllTheInventoryOfColaVendingMachineDisplaysOutOfStock() {
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
   
-    	this.vendingMachine.pressButton("cola");
+    	vendingMachine.pressButton("cola");
     	
     	assertEquals("THANK YOU", vendingMachine.checkDisplay());
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
     	
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
     	
-    	this.vendingMachine.pressButton("cola");
+    	vendingMachine.pressButton("cola");
     	
     	assertEquals("THANK YOU", vendingMachine.checkDisplay());
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
     	
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
-    	this.vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
     	
-    	this.vendingMachine.pressButton("cola");
+    	vendingMachine.pressButton("cola");
     	
     	assertEquals("SOLD OUT", vendingMachine.checkDisplay());
     	assertEquals("$1.00", vendingMachine.checkDisplay());
