@@ -28,10 +28,10 @@ public class VendingMachine {
     	this.tenCentSlot = tenCentCoins;
     	this.fiveCentSlot = fiveCentCoins;
     	this.customerBalance = new BigDecimal("0.0");
-    	this.display = "INSERT COINS";
     	this.coinReturn = new ArrayList<String>();
     	this.productReturn = null;
     	stockInventory();
+    	updateDisplay();
     }
 
 	public String checkDisplay() {
@@ -102,14 +102,16 @@ public class VendingMachine {
     }
 
     private void updateDisplay() {
-    	if (customerBalance.compareTo(new BigDecimal("0.0")) == 0) {
-    		display = "INSERT COINS";
-    	} else {
+    	if (customerBalance.compareTo(new BigDecimal("0.0")) > 0) {
     		display = "$" + padPriceWithZero(customerBalance);
+    	} else if (!canMakeChange()) {
+    		display = "EXACT CHANGE ONLY";
+    	} else {
+    		display = "INSERT COINS";
     	}
     }
-    
-    private void returnChange() {
+
+	private void returnChange() {
     	while (customerBalance.compareTo(new BigDecimal("0.25")) >= 0 && twentyFiveCentSlot > 0) {
     		coinReturn.add("quarter");
     		twentyFiveCentSlot--;
@@ -134,6 +136,11 @@ public class VendingMachine {
     	inventory.put("chips", new MutableInt(2));
     	inventory.put("candy", new MutableInt(2));
     }
+    
+    private boolean canMakeChange() {
+    	// As a safety precaution, VendingMachine will need at least two of each coin to make change
+    	return twentyFiveCentSlot >= 2 && tenCentSlot >= 2 && fiveCentSlot >= 2;
+	}
     
     public IProduct getProductReturn() {
     	return this.productReturn;

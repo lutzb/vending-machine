@@ -62,6 +62,13 @@ public class VendingMachineTest {
     	assertEquals("$1.00", vendingMachine.checkDisplay());
     }
     
+    @Test
+    public void whenVendingMachineCannotMakeChangeForAllProductsItDisplaysExactChangeOnly() {
+    	// Initialiaze VendingMachine without any coins
+    	vendingMachine = new VendingMachine(0, 0, 0);
+    	assertEquals("EXACT CHANGE ONLY", vendingMachine.checkDisplay());
+    }
+    
 	// -------------- getCoinReturn() tests --------------
     
     @Test
