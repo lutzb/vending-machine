@@ -1,21 +1,28 @@
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang3.mutable.MutableInt;
 
 public class VendingMachine {
 	
 	private BigDecimal balance;
 	
+	private String display;
+	
 	private ArrayList<String> coinReturn;
 	
 	private IProduct productReturn;
 	
-	private String display;
+	private Map<String, MutableInt> inventory;
 
     public VendingMachine() {
     	this.balance = new BigDecimal("0.0");
+    	this.display = "INSERT COINS";
     	this.coinReturn = new ArrayList<String>();
     	this.productReturn = null;
-    	this.display = "INSERT COINS";
+    	stockInventory();
     }
     
     public String checkDisplay() {
@@ -39,14 +46,14 @@ public class VendingMachine {
     	updateDisplay();
     }
     
-    public void pressButton(String productStr) {
-    	if (productStr.equals("cola")) {
+    public void pressButton(String buttonPressed) {
+    	if (buttonPressed.equals("cola")) {
     		dispenseProduct(new Cola());
-    	} else if (productStr.equals("chips")) {
+    	} else if (buttonPressed.equals("chips")) {
     		dispenseProduct(new Chips());
-    	} else if (productStr.equals("candy")) {
+    	} else if (buttonPressed.equals("candy")) {
     		dispenseProduct(new Candy());
-    	} else if (productStr.equals("returnChange")) {
+    	} else if (buttonPressed.equals("returnChange")) {
     		returnChange();
     		updateDisplay();
     	}
@@ -68,11 +75,15 @@ public class VendingMachine {
     
     private void dispenseProduct(IProduct product) {
     	BigDecimal productPrice = product.getPrice();
-    	if (balance.compareTo(productPrice) >= 0) {
+    	String productType = product.getType();
+    	if (balance.compareTo(productPrice) >= 0 && inventory.get(productType).getValue() > 0) {
     		balance = balance.subtract(productPrice);
+    		inventory.get(productType).decrement();
 			productReturn = product;
 			display = "THANK YOU";
 			returnChange();
+		} else if (inventory.get(productType).getValue() == 0) {
+			display = "OUT OF STOCK";
 		} else {
 			display = "PRICE: $" + padPriceWithZero(productPrice);
 		}
@@ -99,7 +110,15 @@ public class VendingMachine {
     		coinReturn.add("nickel");
     		balance = balance.subtract(new BigDecimal("0.05"));
     	}
-	}
+    }
+    
+    private void stockInventory() {
+    	// Vending Machine will hold 2 of each product
+    	inventory = new HashMap<String, MutableInt>();
+    	inventory.put("cola", new MutableInt(2));
+    	inventory.put("chips", new MutableInt(2));
+    	inventory.put("candy", new MutableInt(2));
+    }
     
     public IProduct getProductReturn() {
     	return this.productReturn;

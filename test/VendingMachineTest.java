@@ -208,6 +208,40 @@ public class VendingMachineTest {
     	assertEquals("nickel", coinReturn.get(3));
     }
     
+    @Test
+    public void whenTheUserBuysAllTheInventoryOfColaVendingMachineDisplaysOutOfStock() {
+    	this.vendingMachine.insertCoin("quarter");
+    	this.vendingMachine.insertCoin("quarter");
+    	this.vendingMachine.insertCoin("quarter");
+    	this.vendingMachine.insertCoin("quarter");
+  
+    	this.vendingMachine.pressButton("cola");
+    	
+    	assertEquals("THANK YOU", vendingMachine.checkDisplay());
+    	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
+    	
+    	this.vendingMachine.insertCoin("quarter");
+    	this.vendingMachine.insertCoin("quarter");
+    	this.vendingMachine.insertCoin("quarter");
+    	this.vendingMachine.insertCoin("quarter");
+    	
+    	this.vendingMachine.pressButton("cola");
+    	
+    	assertEquals("THANK YOU", vendingMachine.checkDisplay());
+    	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
+    	
+    	this.vendingMachine.insertCoin("quarter");
+    	this.vendingMachine.insertCoin("quarter");
+    	this.vendingMachine.insertCoin("quarter");
+    	this.vendingMachine.insertCoin("quarter");
+    	
+    	this.vendingMachine.pressButton("cola");
+    	
+    	assertEquals("OUT OF STOCK", vendingMachine.checkDisplay());
+    	assertEquals("$1.00", vendingMachine.checkDisplay());
+    	
+    }
+    
     // -------------- padPriceWithZero() tests -------------- 
     
     @Test
