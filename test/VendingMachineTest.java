@@ -12,7 +12,8 @@ public class VendingMachineTest {
 	
 	@Before
 	public void setup () {
-		this.vendingMachine = new VendingMachine();
+		// Vending Machine will start with 5 of each coin
+		this.vendingMachine = new VendingMachine(5, 5, 5);
 	}
 	
 	// -------------- checkDisplay() tests -------------- 

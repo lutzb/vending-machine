@@ -7,9 +7,15 @@ import org.apache.commons.lang3.mutable.MutableInt;
 
 public class VendingMachine {
 	
-	private BigDecimal balance;
+	private BigDecimal customerBalance;
 	
 	private String display;
+	
+	private int twentyFiveCentSlot;
+	
+	private int tenCentSlot;
+	
+	private int fiveCentSlot;
 	
 	private ArrayList<String> coinReturn;
 	
@@ -17,15 +23,18 @@ public class VendingMachine {
 	
 	private Map<String, MutableInt> inventory;
 
-    public VendingMachine() {
-    	this.balance = new BigDecimal("0.0");
+    public VendingMachine(int twentyFiveCentCoins, int tenCentCoins, int fiveCentCoins) {
+    	this.twentyFiveCentSlot = twentyFiveCentCoins;
+    	this.tenCentSlot = tenCentCoins;
+    	this.fiveCentSlot = fiveCentCoins;
+    	this.customerBalance = new BigDecimal("0.0");
     	this.display = "INSERT COINS";
     	this.coinReturn = new ArrayList<String>();
     	this.productReturn = null;
     	stockInventory();
     }
-    
-    public String checkDisplay() {
+
+	public String checkDisplay() {
     	String currentDisplay = display;
     	updateDisplay();
     	return currentDisplay;
@@ -33,12 +42,15 @@ public class VendingMachine {
     
     public void insertCoin(String coin) {
     	// Assign coin value based on weight
-    	if (coin.length() == 6) {  // Hopefully a nickel
-    		balance = balance.add(new BigDecimal("0.05"));
-    	} else if (coin.length() == 4) {  // Hopefully a dime
-    		balance = balance.add(new BigDecimal("0.10"));
-    	} else if (coin.length() == 7) {  // Hopefully a quarter
-    		balance = balance.add(new BigDecimal("0.25"));
+    	if (coin.length() == 6) {  // Hopefully a nickel worth 5 cents
+    		fiveCentSlot++;
+    		customerBalance = customerBalance.add(new BigDecimal("0.05"));
+    	} else if (coin.length() == 4) {  // Hopefully a dime worth 10 cents
+    		tenCentSlot++;
+    		customerBalance = customerBalance.add(new BigDecimal("0.10"));
+    	} else if (coin.length() == 7) {  // Hopefully a quarter worth 25 cents
+    		twentyFiveCentSlot++;
+    		customerBalance = customerBalance.add(new BigDecimal("0.25"));
     	} else {
     		coinReturn.add(coin);
     	}
@@ -59,25 +71,25 @@ public class VendingMachine {
     	}
     }
 
-	protected String padPriceWithZero(BigDecimal price) {
-    	String priceStr = String.valueOf(price);
+	protected String padPriceWithZero(BigDecimal amount) {
+    	String amountStr = String.valueOf(amount);
     	// Check number of decimal places
-		int indexOfDecimal = priceStr.indexOf(".");
-		String decimalPlaces = priceStr.substring(indexOfDecimal + 1);
+		int indexOfDecimal = amountStr.indexOf(".");
+		String decimalPlaces = amountStr.substring(indexOfDecimal + 1);
 		
 		// Add a '0' to the end of the display if balance only has one decimal place
 		if (decimalPlaces.length() < 2) {
-			priceStr += "0";
+			amountStr += "0";
 		}
 		
-		return priceStr;
+		return amountStr;
     }
     
     private void dispenseProduct(IProduct product) {
     	BigDecimal productPrice = product.getPrice();
     	String productType = product.getType();
-    	if (balance.compareTo(productPrice) >= 0 && inventory.get(productType).getValue() > 0) {
-    		balance = balance.subtract(productPrice);
+    	if (customerBalance.compareTo(productPrice) >= 0 && inventory.get(productType).getValue() > 0) {
+    		customerBalance = customerBalance.subtract(productPrice);
     		inventory.get(productType).decrement();
 			productReturn = product;
 			display = "THANK YOU";
@@ -90,25 +102,28 @@ public class VendingMachine {
     }
 
     private void updateDisplay() {
-    	if (balance.compareTo(new BigDecimal("0.0")) == 0) {
+    	if (customerBalance.compareTo(new BigDecimal("0.0")) == 0) {
     		display = "INSERT COINS";
     	} else {
-    		display = "$" + padPriceWithZero(balance);
+    		display = "$" + padPriceWithZero(customerBalance);
     	}
     }
     
     private void returnChange() {
-    	while (balance.compareTo(new BigDecimal("0.25")) >= 0) {
+    	while (customerBalance.compareTo(new BigDecimal("0.25")) >= 0 && twentyFiveCentSlot > 0) {
     		coinReturn.add("quarter");
-    		balance = balance.subtract(new BigDecimal("0.25"));
+    		twentyFiveCentSlot--;
+    		customerBalance = customerBalance.subtract(new BigDecimal("0.25"));
     	}
-    	while (balance.compareTo(new BigDecimal("0.10")) >= 0) {
+    	while (customerBalance.compareTo(new BigDecimal("0.10")) >= 0 && tenCentSlot > 0) {
     		coinReturn.add("dime");
-    		balance = balance.subtract(new BigDecimal("0.10"));
+    		tenCentSlot--;
+    		customerBalance = customerBalance.subtract(new BigDecimal("0.10"));
     	}
-    	while (balance.compareTo(new BigDecimal("0.05")) >= 0) {
+    	while (customerBalance.compareTo(new BigDecimal("0.05")) >= 0 && fiveCentSlot > 0) {
     		coinReturn.add("nickel");
-    		balance = balance.subtract(new BigDecimal("0.05"));
+    		fiveCentSlot--;
+    		customerBalance = customerBalance.subtract(new BigDecimal("0.05"));
     	}
     }
     
