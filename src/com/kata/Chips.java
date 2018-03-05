@@ -1,14 +1,15 @@
+package com.kata;
 import java.math.BigDecimal;
 
-public class Candy implements IProduct {
+public class Chips implements IProduct {
 
 	private String type;
 	
 	private BigDecimal price;
 	
-	public Candy() {
-		this.type = "candy";
-		this.price = new BigDecimal("0.65");
+	public Chips() {
+		this.type = "chips";
+		this.price = new BigDecimal("0.50");
 	}
 	
 	public String getType() {

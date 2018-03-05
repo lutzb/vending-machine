@@ -1,9 +1,12 @@
+package com.kata;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.mutable.MutableInt;
+
+import com.util.VendingMachineUtil;
 
 public class VendingMachine {
 	
@@ -70,20 +73,6 @@ public class VendingMachine {
     		updateDisplay();
     	}
     }
-
-	protected String padPriceWithZero(BigDecimal amount) {
-    	String amountStr = String.valueOf(amount);
-    	// Check number of decimal places
-		int indexOfDecimal = amountStr.indexOf(".");
-		String decimalPlaces = amountStr.substring(indexOfDecimal + 1);
-		
-		// Add a '0' to the end of the display if balance only has one decimal place
-		if (decimalPlaces.length() < 2) {
-			amountStr += "0";
-		}
-		
-		return amountStr;
-    }
     
     private void dispenseProduct(IProduct product) {
     	BigDecimal productPrice = product.getPrice();
@@ -97,13 +86,13 @@ public class VendingMachine {
 		} else if (inventory.get(productType).getValue() == 0) {
 			display = "SOLD OUT";
 		} else {
-			display = "PRICE: $" + padPriceWithZero(productPrice);
+			display = "PRICE: $" + VendingMachineUtil.padPriceWithZero(productPrice);
 		}
     }
 
     private void updateDisplay() {
     	if (customerBalance.compareTo(new BigDecimal("0.0")) > 0) {
-    		display = "$" + padPriceWithZero(customerBalance);
+    		display = "$" + VendingMachineUtil.padPriceWithZero(customerBalance);
     	} else if (!canMakeChange()) {
     		display = "EXACT CHANGE ONLY";
     	} else {

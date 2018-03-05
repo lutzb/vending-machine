@@ -1,6 +1,6 @@
+package com.kata;
 import static junit.framework.TestCase.assertEquals;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -248,17 +248,5 @@ public class VendingMachineTest {
     	assertEquals("SOLD OUT", vendingMachine.checkDisplay());
     	assertEquals("$1.00", vendingMachine.checkDisplay());
     	
-    }
-    
-    // -------------- padPriceWithZero() tests -------------- 
-    
-    @Test
-    public void whenPadPriceWithZeroIsGivenADoubleDigitValueItReturnsThatValue() {
-    	assertEquals("0.15", vendingMachine.padPriceWithZero(new BigDecimal("0.15")));
-    }
-    
-    @Test
-    public void whenPadPriceWithZeroIsGivenASingleDigitValueItReturnsThatValuePaddedWithAZero() {
-    	assertEquals("0.10", vendingMachine.padPriceWithZero(new BigDecimal("0.1")));
     }
 }
