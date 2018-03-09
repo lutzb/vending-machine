@@ -129,7 +129,7 @@ public class VendingMachineTest {
     	assertEquals("nickel", coinReturn.get(2));
     }
     
-	// -------------- pressButton() tests --------------
+	// -------------- pressProductButton() tests --------------
     
     @Test
     public void whenUserPressesColaButtonWithoutInsertingAnyMoneyVendingMachineDisplaysThePriceOfColaThenResetsTheDisplay() {
@@ -198,26 +198,6 @@ public class VendingMachineTest {
     	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
     }
     
-    
-    @Test
-    public void whenTheUserInsertsCoinsThenPressesReturnChangeButtonVendingMachineReturnsTheUsersChange() {
-    	vendingMachine.insertCoin("quarter");
-    	vendingMachine.insertCoin("quarter");
-    	vendingMachine.insertCoin("dime");
-    	vendingMachine.insertCoin("nickle");
-    	
-    	vendingMachine.pressReturnChangeButton();
-    	
-    	ArrayList<String> coinReturn = vendingMachine.getCoinReturn();
-
-    	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
-    	assertEquals(4, coinReturn.size());
-    	assertEquals("quarter", coinReturn.get(0));
-    	assertEquals("quarter", coinReturn.get(1));
-    	assertEquals("dime", coinReturn.get(2));
-    	assertEquals("nickel", coinReturn.get(3));
-    }
-    
     @Test
     public void whenTheUserBuysAllTheInventoryOfColaVendingMachineDisplaysOutOfStock() {
     	vendingMachine.insertCoin("quarter");
@@ -250,5 +230,26 @@ public class VendingMachineTest {
     	assertEquals("SOLD OUT", vendingMachine.checkDisplay());
     	assertEquals("$1.00", vendingMachine.checkDisplay());
     	
+    }
+    
+    // -------------- pressReturnChangeButton() tests --------------
+    
+    @Test
+    public void whenTheUserInsertsCoinsThenPressesReturnChangeButtonVendingMachineReturnsTheUsersChange() {
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("quarter");
+    	vendingMachine.insertCoin("dime");
+    	vendingMachine.insertCoin("nickle");
+    	
+    	vendingMachine.pressReturnChangeButton();
+    	
+    	ArrayList<String> coinReturn = vendingMachine.getCoinReturn();
+
+    	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
+    	assertEquals(4, coinReturn.size());
+    	assertEquals("quarter", coinReturn.get(0));
+    	assertEquals("quarter", coinReturn.get(1));
+    	assertEquals("dime", coinReturn.get(2));
+    	assertEquals("nickel", coinReturn.get(3));
     }
 }

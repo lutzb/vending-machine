@@ -12,6 +12,7 @@ import com.coinslot.TenCentSlot;
 import com.coinslot.TwentyFiveCentSlot;
 import com.product.IProduct;
 import com.product.ProductFactory;
+import com.util.Constants;
 import com.util.VendingMachineUtil;
 
 public class VendingMachine {
@@ -36,7 +37,7 @@ public class VendingMachine {
     	this.twentyFiveCentSlot = new TwentyFiveCentSlot(twentyFiveCentCoins);
     	this.tenCentSlot = new TenCentSlot(tenCentCoins);
     	this.fiveCentSlot = new FiveCentSlot(fiveCentCoins);
-    	this.customerBalance = new BigDecimal("0.0");
+    	this.customerBalance = new BigDecimal(Constants.ZERO);
     	this.coinReturn = new ArrayList<String>();
     	this.productReturn = null;
     	stockInventory();
@@ -53,13 +54,13 @@ public class VendingMachine {
     	// Assign coin value based on weight
     	if (coin.length() == 6) {  // Hopefully a nickel worth 5 cents
     		fiveCentSlot.addCoin();
-    		customerBalance = customerBalance.add(new BigDecimal("0.05"));
+    		customerBalance = customerBalance.add(new BigDecimal(Constants.FIVE_CENTS));
     	} else if (coin.length() == 4) {  // Hopefully a dime worth 10 cents
     		tenCentSlot.addCoin();
-    		customerBalance = customerBalance.add(new BigDecimal("0.10"));
+    		customerBalance = customerBalance.add(new BigDecimal(Constants.TEN_CENTS));
     	} else if (coin.length() == 7) {  // Hopefully a quarter worth 25 cents
     		twentyFiveCentSlot.addCoin();
-    		customerBalance = customerBalance.add(new BigDecimal("0.25"));
+    		customerBalance = customerBalance.add(new BigDecimal(Constants.TWENTY_FIVE_CENTS));
     	} else {
     		coinReturn.add(coin);
     	}
@@ -77,7 +78,7 @@ public class VendingMachine {
         		dispenseProduct(product);
     			returnChange();
     		} else if (inventory.get(productType).getValue() == 0) {
-    			display = "SOLD OUT";
+    			display = Constants.SOLD_OUT;
     		} else {
     			display = "PRICE: $" + VendingMachineUtil.padPriceWithZero(productPrice);
     		}
@@ -94,16 +95,16 @@ public class VendingMachine {
 		customerBalance = customerBalance.subtract(product.getPrice());
 		inventory.get(product.getType()).decrement();
 		productReturn = product;
-		display = "THANK YOU";
+		display = Constants.THANK_YOU;
     }
 
     private void updateDisplay() {
-    	if (customerBalance.compareTo(new BigDecimal("0.0")) > 0) {
+    	if (customerBalance.compareTo(new BigDecimal(Constants.ZERO)) > 0) {
     		display = "$" + VendingMachineUtil.padPriceWithZero(customerBalance);
     	} else if (!canMakeChange()) {
-    		display = "EXACT CHANGE ONLY";
+    		display = Constants.EXACT_CHANGE;
     	} else {
-    		display = "INSERT COINS";
+    		display = Constants.INSERT_COINS;
     	}
     }
 
@@ -127,9 +128,9 @@ public class VendingMachine {
 	private void stockInventory() {
     	// Vending Machine will hold 2 of each product
     	inventory = new HashMap<String, MutableInt>();
-    	inventory.put("cola", new MutableInt(2));
-    	inventory.put("chips", new MutableInt(2));
-    	inventory.put("candy", new MutableInt(2));
+    	inventory.put(Constants.COLA, new MutableInt(2));
+    	inventory.put(Constants.CHIPS, new MutableInt(2));
+    	inventory.put(Constants.CANDY, new MutableInt(2));
     }
     
     private boolean canMakeChange() {
