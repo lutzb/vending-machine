@@ -61,33 +61,34 @@ public class VendingMachine {
     	updateDisplay();
     }
     
-    public void pressButton(String buttonPressed) {
-    	if (buttonPressed.equals("cola")) {
-    		dispenseProduct(new Cola());
-    	} else if (buttonPressed.equals("chips")) {
-    		dispenseProduct(new Chips());
-    	} else if (buttonPressed.equals("candy")) {
-    		dispenseProduct(new Candy());
-    	} else if (buttonPressed.equals("returnChange")) {
-    		returnChange();
-    		updateDisplay();
+    public void pressProductButton(String buttonPressed) {
+    	IProduct product = ProductFactory.getProduct(buttonPressed);
+    	
+    	if (product != null) {
+    		BigDecimal productPrice = product.getPrice();
+        	String productType = product.getType();
+        	if (customerBalance.compareTo(productPrice) >= 0 && inventory.get(productType).getValue() > 0) {
+        		dispenseProduct(product);
+    			returnChange();
+    		} else if (inventory.get(productType).getValue() == 0) {
+    			display = "SOLD OUT";
+    		} else {
+    			display = "PRICE: $" + VendingMachineUtil.padPriceWithZero(productPrice);
+    		}
+    		
     	}
     }
     
+    public void pressReturnChangeButton() {
+		returnChange();
+		updateDisplay();
+    }
+    
     private void dispenseProduct(IProduct product) {
-    	BigDecimal productPrice = product.getPrice();
-    	String productType = product.getType();
-    	if (customerBalance.compareTo(productPrice) >= 0 && inventory.get(productType).getValue() > 0) {
-    		customerBalance = customerBalance.subtract(productPrice);
-    		inventory.get(productType).decrement();
-			productReturn = product;
-			display = "THANK YOU";
-			returnChange();
-		} else if (inventory.get(productType).getValue() == 0) {
-			display = "SOLD OUT";
-		} else {
-			display = "PRICE: $" + VendingMachineUtil.padPriceWithZero(productPrice);
-		}
+		customerBalance = customerBalance.subtract(product.getPrice());
+		inventory.get(product.getType()).decrement();
+		productReturn = product;
+		display = "THANK YOU";
     }
 
     private void updateDisplay() {
