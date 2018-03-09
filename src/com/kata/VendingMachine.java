@@ -142,11 +142,19 @@ public class VendingMachine {
     			fiveCentSlot.getCoinCount() >= 2;
 	}
     
+    public void clearProductReturn() {
+    	productReturn = null;
+    }
+    
     public IProduct getProductReturn() {
-    	return this.productReturn;
+    	return productReturn;
     }
     
     public ArrayList<String> getCoinReturn() {
-    	return this.coinReturn;
+    	return coinReturn;
+    }
+    
+    public void clearCoinReturn() {
+    	coinReturn.clear();
     }
 }
