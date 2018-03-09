@@ -4,13 +4,20 @@ import java.math.BigDecimal;
 
 public class TenCentSlot implements ICoinSlot {
 
+	private String coinName;
+	
 	private BigDecimal coinValue;
 	
 	private int coinCount;
 	
 	public TenCentSlot(int coinCount) {
+		this.coinName = "dime";
 		this.coinValue = new BigDecimal("0.10");
 		this.coinCount = coinCount;
+	}
+	
+	public String getCoinName() {
+		return coinName;
 	}
 	
 	public BigDecimal getCoinValue() {

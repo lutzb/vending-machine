@@ -17,4 +17,8 @@ public class VendingMachineUtil {
 		
 		return amountStr;
     }
+
+	public static int determineNumberOfCoinsDue(BigDecimal coinValue, BigDecimal customerBalance) {
+		return customerBalance.divide(coinValue).toBigInteger().intValue();
+	}
 }

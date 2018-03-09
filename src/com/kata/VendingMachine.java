@@ -102,24 +102,23 @@ public class VendingMachine {
     }
 
 	private void returnChange() {
-    	while (customerBalance.compareTo(new BigDecimal("0.25")) >= 0 && twentyFiveCentSlot.getCoinCount() > 0) {
-    		coinReturn.add("quarter");
-    		twentyFiveCentSlot.removeCoin();
-    		customerBalance = customerBalance.subtract(new BigDecimal("0.25"));
-    	}
-    	while (customerBalance.compareTo(new BigDecimal("0.10")) >= 0 && tenCentSlot.getCoinCount() > 0) {
-    		coinReturn.add("dime");
-    		tenCentSlot.removeCoin();
-    		customerBalance = customerBalance.subtract(new BigDecimal("0.10"));
-    	}
-    	while (customerBalance.compareTo(new BigDecimal("0.05")) >= 0 && fiveCentSlot.getCoinCount() > 0) {
-    		coinReturn.add("nickel");
-    		fiveCentSlot.removeCoin();
-    		customerBalance = customerBalance.subtract(new BigDecimal("0.05"));
-    	}
+		dispenseCoins(twentyFiveCentSlot);
+		dispenseCoins(tenCentSlot);
+		dispenseCoins(fiveCentSlot);
     }
     
-    private void stockInventory() {
+    private void dispenseCoins(ICoinSlot coinSlot) {
+    	BigDecimal coinValue = coinSlot.getCoinValue();
+    	int coinsDue = VendingMachineUtil.determineNumberOfCoinsDue(coinValue, customerBalance);
+		
+    	for (int i = 0; i < coinsDue; i++) {
+			coinSlot.removeCoin();
+			coinReturn.add(coinSlot.getCoinName());
+			customerBalance = customerBalance.subtract(coinValue);
+		}
+	}
+
+	private void stockInventory() {
     	// Vending Machine will hold 2 of each product
     	inventory = new HashMap<String, MutableInt>();
     	inventory.put("cola", new MutableInt(2));
