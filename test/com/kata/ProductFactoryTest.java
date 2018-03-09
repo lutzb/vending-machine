@@ -4,6 +4,9 @@ import static junit.framework.TestCase.assertEquals;
 
 import org.junit.Test;
 
+import com.product.IProduct;
+import com.product.ProductFactory;
+
 public class ProductFactoryTest {
     
 	@Test

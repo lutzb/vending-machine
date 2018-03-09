@@ -1,18 +1,18 @@
-package com.kata;
+package com.coinslot;
 
 import java.math.BigDecimal;
 
-public class FiveCentSlot implements ICoinSlot {
-	
+public class TwentyFiveCentSlot implements ICoinSlot {
+
 	private String coinName;
 	
 	private BigDecimal coinValue;
 	
 	private int coinCount;
 	
-	public FiveCentSlot(int coinCount) {
-		this.coinName = "nickel";
-		this.coinValue = new BigDecimal("0.05");
+	public TwentyFiveCentSlot(int coinCount) {
+		this.coinName = "quarter";
+		this.coinValue = new BigDecimal("0.25");
 		this.coinCount = coinCount;
 	}
 	
@@ -35,4 +35,5 @@ public class FiveCentSlot implements ICoinSlot {
 	public int getCoinCount() {
 		return coinCount;
 	}
+
 }

@@ -1,4 +1,4 @@
-package com.kata;
+package com.product;
 
 public class ProductFactory {
 

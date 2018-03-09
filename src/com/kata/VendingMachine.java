@@ -6,6 +6,12 @@ import java.util.Map;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
+import com.coinslot.FiveCentSlot;
+import com.coinslot.ICoinSlot;
+import com.coinslot.TenCentSlot;
+import com.coinslot.TwentyFiveCentSlot;
+import com.product.IProduct;
+import com.product.ProductFactory;
 import com.util.VendingMachineUtil;
 
 public class VendingMachine {

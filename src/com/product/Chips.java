@@ -1,4 +1,4 @@
-package com.kata;
+package com.product;
 import java.math.BigDecimal;
 
 public class Chips implements IProduct {

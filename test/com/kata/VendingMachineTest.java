@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.product.IProduct;
+
 public class VendingMachineTest {
 
 	private VendingMachine vendingMachine;

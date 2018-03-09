@@ -1,22 +1,23 @@
-package com.kata;
+package com.product;
 import java.math.BigDecimal;
 
-public class Cola implements IProduct {
-	
+public class Candy implements IProduct {
+
 	private String type;
 	
 	private BigDecimal price;
 	
-	public Cola() {
-		this.type = "cola";
-		this.price = new BigDecimal("1.00");
+	public Candy() {
+		this.type = "candy";
+		this.price = new BigDecimal("0.65");
 	}
-
+	
 	public String getType() {
 		return this.type;
 	}
-	
+
 	public BigDecimal getPrice() {
 		return this.price;
 	}
+
 }
