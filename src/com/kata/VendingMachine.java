@@ -14,11 +14,11 @@ public class VendingMachine {
 	
 	private String display;
 	
-	private int twentyFiveCentSlot;
+	private ICoinSlot twentyFiveCentSlot;
 	
-	private int tenCentSlot;
+	private ICoinSlot tenCentSlot;
 	
-	private int fiveCentSlot;
+	private ICoinSlot fiveCentSlot;
 	
 	private ArrayList<String> coinReturn;
 	
@@ -27,9 +27,9 @@ public class VendingMachine {
 	private Map<String, MutableInt> inventory;
 
     public VendingMachine(int twentyFiveCentCoins, int tenCentCoins, int fiveCentCoins) {
-    	this.twentyFiveCentSlot = twentyFiveCentCoins;
-    	this.tenCentSlot = tenCentCoins;
-    	this.fiveCentSlot = fiveCentCoins;
+    	this.twentyFiveCentSlot = new TwentyFiveCentSlot(twentyFiveCentCoins);
+    	this.tenCentSlot = new TenCentSlot(tenCentCoins);
+    	this.fiveCentSlot = new FiveCentSlot(fiveCentCoins);
     	this.customerBalance = new BigDecimal("0.0");
     	this.coinReturn = new ArrayList<String>();
     	this.productReturn = null;
@@ -46,13 +46,13 @@ public class VendingMachine {
     public void insertCoin(String coin) {
     	// Assign coin value based on weight
     	if (coin.length() == 6) {  // Hopefully a nickel worth 5 cents
-    		fiveCentSlot++;
+    		fiveCentSlot.addCoin();
     		customerBalance = customerBalance.add(new BigDecimal("0.05"));
     	} else if (coin.length() == 4) {  // Hopefully a dime worth 10 cents
-    		tenCentSlot++;
+    		tenCentSlot.addCoin();
     		customerBalance = customerBalance.add(new BigDecimal("0.10"));
     	} else if (coin.length() == 7) {  // Hopefully a quarter worth 25 cents
-    		twentyFiveCentSlot++;
+    		twentyFiveCentSlot.addCoin();
     		customerBalance = customerBalance.add(new BigDecimal("0.25"));
     	} else {
     		coinReturn.add(coin);
@@ -102,19 +102,19 @@ public class VendingMachine {
     }
 
 	private void returnChange() {
-    	while (customerBalance.compareTo(new BigDecimal("0.25")) >= 0 && twentyFiveCentSlot > 0) {
+    	while (customerBalance.compareTo(new BigDecimal("0.25")) >= 0 && twentyFiveCentSlot.getCoinCount() > 0) {
     		coinReturn.add("quarter");
-    		twentyFiveCentSlot--;
+    		twentyFiveCentSlot.removeCoin();
     		customerBalance = customerBalance.subtract(new BigDecimal("0.25"));
     	}
-    	while (customerBalance.compareTo(new BigDecimal("0.10")) >= 0 && tenCentSlot > 0) {
+    	while (customerBalance.compareTo(new BigDecimal("0.10")) >= 0 && tenCentSlot.getCoinCount() > 0) {
     		coinReturn.add("dime");
-    		tenCentSlot--;
+    		tenCentSlot.removeCoin();
     		customerBalance = customerBalance.subtract(new BigDecimal("0.10"));
     	}
-    	while (customerBalance.compareTo(new BigDecimal("0.05")) >= 0 && fiveCentSlot > 0) {
+    	while (customerBalance.compareTo(new BigDecimal("0.05")) >= 0 && fiveCentSlot.getCoinCount() > 0) {
     		coinReturn.add("nickel");
-    		fiveCentSlot--;
+    		fiveCentSlot.removeCoin();
     		customerBalance = customerBalance.subtract(new BigDecimal("0.05"));
     	}
     }
@@ -129,7 +129,9 @@ public class VendingMachine {
     
     private boolean canMakeChange() {
     	// As a safety precaution, VendingMachine will need at least two of each coin to make change
-    	return twentyFiveCentSlot >= 2 && tenCentSlot >= 2 && fiveCentSlot >= 2;
+    	return twentyFiveCentSlot.getCoinCount() >= 2 && 
+    			tenCentSlot.getCoinCount() >= 2 && 
+    			fiveCentSlot.getCoinCount() >= 2;
 	}
     
     public IProduct getProductReturn() {
