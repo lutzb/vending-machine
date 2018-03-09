@@ -36,10 +36,13 @@ public class UserInteraction {
 					returnChange();
 					break;
 				case "5":
+					checkCoinReturn();
+					break;
+				case "6":
 					userInteracting = false;
 					break;
 				default:
-					System.out.print("I'm not sure what you're trying to do... Please enter a single number 1 through 5.");
+					System.out.print("I'm not sure what you're trying to do... Please enter a single number 1 through 6.");
 			}
 		}
 		
@@ -54,8 +57,9 @@ public class UserInteraction {
 		System.out.println("1: Insert Coins");
 		System.out.println("2: Press Product Button");
 		System.out.println("3: Check Product Return");
-		System.out.println("4: Press Return Change Button");
-		System.out.println("5: Exit");
+		System.out.println("4: Press Coin Return Button");
+		System.out.println("5: Check Coin Return");
+		System.out.println("6: Exit");
 		System.out.println("----------------------------------");
 		System.out.print("What would you like to do: ");
 	}
@@ -94,6 +98,9 @@ public class UserInteraction {
 	
 	private static void returnChange() {
 		vendingMachine.pressReturnChangeButton();
+	}
+	
+	private static void checkCoinReturn() {
 		ArrayList<String> returnedCoins = vendingMachine.getCoinReturn();
 		if (returnedCoins.isEmpty()) {
 			System.out.println("Coin return is empty.");
