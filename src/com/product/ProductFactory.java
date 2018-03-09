@@ -1,19 +1,22 @@
 package com.product;
 
+import com.exception.InvalidProductException;
+import com.util.Constants;
+
 public class ProductFactory {
 
-	public static IProduct getProduct(String productType) {
+	public static IProduct getProduct(String productType) throws InvalidProductException {
 		if (productType == null) {
-			return null; 
-		} else if (productType.equals("cola")) {
+			throw new InvalidProductException("Null product type."); 
+		} else if (productType.equals(Constants.COLA)) {
 			return new Cola();
-		} else if (productType.equals("candy")) {
+		} else if (productType.equals(Constants.CANDY)) {
 			return new Candy();
-		} else if (productType.equals("chips")) {
+		} else if (productType.equals(Constants.CHIPS)) {
 			return new Chips();
 		}
 		
-		return null;
+		throw new InvalidProductException("Unknown product type."); 
 	}
 }
 	

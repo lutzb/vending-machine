@@ -10,6 +10,7 @@ import com.coinslot.FiveCentSlot;
 import com.coinslot.ICoinSlot;
 import com.coinslot.TenCentSlot;
 import com.coinslot.TwentyFiveCentSlot;
+import com.exception.InvalidProductException;
 import com.product.IProduct;
 import com.product.ProductFactory;
 import com.util.Constants;
@@ -69,9 +70,9 @@ public class VendingMachine {
     }
     
     public void pressProductButton(String buttonPressed) {
-    	IProduct product = ProductFactory.getProduct(buttonPressed);
-    	
-    	if (product != null) {
+    	try {
+    		IProduct product = ProductFactory.getProduct(buttonPressed);
+    		
     		BigDecimal productPrice = product.getPrice();
         	String productType = product.getType();
         	if (customerBalance.compareTo(productPrice) >= 0 && inventory.get(productType).getValue() > 0) {
@@ -82,7 +83,8 @@ public class VendingMachine {
     		} else {
     			display = "PRICE: $" + VendingMachineUtil.padPriceWithZero(productPrice);
     		}
-    		
+    	} catch (InvalidProductException e) {
+    		display = "INVALID PRODUCT";
     	}
     }
     

@@ -199,7 +199,7 @@ public class VendingMachineTest {
     }
     
     @Test
-    public void whenTheUserBuysAllTheInventoryOfColaVendingMachineDisplaysOutOfStock() {
+    public void whenUserBuysAllTheInventoryOfColaVendingMachineDisplaysOutOfStock() {
     	vendingMachine.insertCoin("quarter");
     	vendingMachine.insertCoin("quarter");
     	vendingMachine.insertCoin("quarter");
@@ -232,10 +232,18 @@ public class VendingMachineTest {
     	
     }
     
+    @Test
+    public void whenUserPressesAnInvalidProductButtonTheDisplayShowsInvalidProduct() {
+    	vendingMachine.pressProductButton("meatballs");
+    	
+    	assertEquals("INVALID PRODUCT", vendingMachine.checkDisplay());
+    	assertEquals("INSERT COINS", vendingMachine.checkDisplay());
+    }
+    
     // -------------- pressReturnChangeButton() tests --------------
     
     @Test
-    public void whenTheUserInsertsCoinsThenPressesReturnChangeButtonVendingMachineReturnsTheUsersChange() {
+    public void whenUserInsertsCoinsThenPressesReturnChangeButtonVendingMachineReturnsTheUsersChange() {
     	vendingMachine.insertCoin("quarter");
     	vendingMachine.insertCoin("quarter");
     	vendingMachine.insertCoin("dime");
