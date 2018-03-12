@@ -43,7 +43,7 @@ public class UserInteraction {
 					userInteracting = false;
 					break;
 				default:
-					System.out.print("I'm not sure what you're trying to do... Please enter a single number 1 through 6.");
+					System.out.println("I'm not sure what you're trying to do... Please enter a single number 1 through 6.");
 			}
 		}
 		
@@ -64,14 +64,14 @@ public class UserInteraction {
 
 	private static void printMenu() {
 		System.out.println("----------------------------------");
-		System.out.println(vendingMachine.checkDisplay());
-		System.out.println("----------------------------------");
 		System.out.println("1: Insert Coins");
 		System.out.println("2: Press Product Button");
 		System.out.println("3: Check Product Return");
 		System.out.println("4: Press Coin Return Button");
 		System.out.println("5: Check Coin Return");
 		System.out.println("6: Exit");
+		System.out.println("----------------------------------");
+		System.out.println("Display: " + vendingMachine.checkDisplay());
 		System.out.println("----------------------------------");
 		System.out.print("What would you like to do: ");
 	}
@@ -91,7 +91,7 @@ public class UserInteraction {
 	}
 	
 	private static void buyProduct(Scanner in) {
-		System.out.print("Select a product to buy (cola, candy, or chips): ");
+		System.out.print("Select a product (cola, candy, or chips): ");
 		String product = in.nextLine();
 		System.out.println("----------------------------------");
 		vendingMachine.pressProductButton(product);
