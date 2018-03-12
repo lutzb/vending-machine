@@ -18,20 +18,13 @@ import main.java.util.VendingMachineUtil;
 
 public class VendingMachine {
 	
-	private BigDecimal customerBalance;
-	
 	private String display;
-	
+	private BigDecimal customerBalance;
 	private ICoinSlot twentyFiveCentSlot;
-	
 	private ICoinSlot tenCentSlot;
-	
 	private ICoinSlot fiveCentSlot;
-	
 	private ArrayList<String> coinReturn;
-	
 	private IProduct productReturn;
-	
 	private Map<String, MutableInt> inventory;
 
     public VendingMachine(int twentyFiveCentCoins, int tenCentCoins, int fiveCentCoins) {
@@ -52,14 +45,13 @@ public class VendingMachine {
     }
     
     public void insertCoin(String coin) {
-    	// Assign coin value based on weight
-    	if (coin.length() == 6) {  // Hopefully a nickel worth 5 cents
+    	if (coin.equals("nickel")) {
     		fiveCentSlot.addCoin();
     		customerBalance = customerBalance.add(new BigDecimal(Constants.FIVE_CENTS));
-    	} else if (coin.length() == 4) {  // Hopefully a dime worth 10 cents
+    	} else if (coin.equals("dime")) {
     		tenCentSlot.addCoin();
     		customerBalance = customerBalance.add(new BigDecimal(Constants.TEN_CENTS));
-    	} else if (coin.length() == 7) {  // Hopefully a quarter worth 25 cents
+    	} else if (coin.equals("quarter")) {
     		twentyFiveCentSlot.addCoin();
     		customerBalance = customerBalance.add(new BigDecimal(Constants.TWENTY_FIVE_CENTS));
     	} else {
@@ -75,7 +67,7 @@ public class VendingMachine {
     		
     		BigDecimal productPrice = product.getPrice();
         	String productType = product.getType();
-        	if (customerBalance.compareTo(productPrice) >= 0 && inventory.get(productType).getValue() > 0) {
+        	if (ableToDispenseProduct(product)) {
         		dispenseProduct(product);
     			returnChange();
     		} else if (inventory.get(productType).getValue() == 0) {
@@ -88,7 +80,7 @@ public class VendingMachine {
     	}
     }
     
-    public void pressReturnChangeButton() {
+	public void pressReturnChangeButton() {
 		returnChange();
 		updateDisplay();
     }
@@ -134,6 +126,11 @@ public class VendingMachine {
     	inventory.put(Constants.CHIPS, new MutableInt(2));
     	inventory.put(Constants.CANDY, new MutableInt(2));
     }
+	
+    private boolean ableToDispenseProduct(IProduct product) {
+    	return customerBalance.compareTo(product.getPrice()) >= 0 && 
+    			inventory.get(product.getType()).getValue() > 0;
+	}
     
     private boolean ableToMakeChange() {
     	// As a safety precaution, VendingMachine will need at least two of each coin to make change

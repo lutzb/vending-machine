@@ -248,7 +248,7 @@ public class VendingMachineTest {
     	vendingMachine.insertCoin("quarter");
     	vendingMachine.insertCoin("quarter");
     	vendingMachine.insertCoin("dime");
-    	vendingMachine.insertCoin("nickle");
+    	vendingMachine.insertCoin("nickel");
     	
     	vendingMachine.pressReturnChangeButton();
     	
