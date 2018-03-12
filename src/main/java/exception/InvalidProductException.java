@@ -1,4 +1,4 @@
-package com.exception;
+package main.java.exception;
 
 public class InvalidProductException extends VendingMachineException {
 

@@ -1,8 +1,8 @@
-package com.coinslot;
+package main.java.coinslot;
 
 import java.math.BigDecimal;
 
-import com.util.Constants;
+import main.java.util.Constants;
 
 public class FiveCentSlot implements ICoinSlot {
 	

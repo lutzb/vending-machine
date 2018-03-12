@@ -1,15 +1,15 @@
-package com.product;
+package main.java.product;
 import java.math.BigDecimal;
 
-public class Chips implements IProduct {
+public class Candy implements IProduct {
 
 	private String type;
 	
 	private BigDecimal price;
 	
-	public Chips() {
-		this.type = "chips";
-		this.price = new BigDecimal("0.50");
+	public Candy() {
+		this.type = "candy";
+		this.price = new BigDecimal("0.65");
 	}
 	
 	public String getType() {

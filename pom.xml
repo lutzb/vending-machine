@@ -28,7 +28,7 @@
 		<configuration>
 		  <archive>
 		    <manifest>
-		      <mainClass>com.kata.UserInteraction</mainClass>
+		      <mainClass>main.java.kata.UserInteraction</mainClass>
 	        </manifest>
 	      </archive>
 		    <descriptorRefs>

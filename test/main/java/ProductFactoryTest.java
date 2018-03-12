@@ -1,12 +1,12 @@
-package com.kata;
+package main.java;
 
 import static junit.framework.TestCase.assertEquals;
 
 import org.junit.Test;
 
-import com.exception.InvalidProductException;
-import com.product.IProduct;
-import com.product.ProductFactory;
+import main.java.exception.InvalidProductException;
+import main.java.product.IProduct;
+import main.java.product.ProductFactory;
 
 public class ProductFactoryTest {
     

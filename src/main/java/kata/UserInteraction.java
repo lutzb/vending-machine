@@ -1,10 +1,10 @@
-package com.kata;
+package main.java.kata;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.product.IProduct;
+import main.java.product.IProduct;
 
 public class UserInteraction {
 	

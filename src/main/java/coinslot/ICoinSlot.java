@@ -1,4 +1,4 @@
-package com.coinslot;
+package main.java.coinslot;
 
 import java.math.BigDecimal;
 

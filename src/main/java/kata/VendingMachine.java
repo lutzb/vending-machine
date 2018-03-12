@@ -1,4 +1,4 @@
-package com.kata;
+package main.java.kata;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,15 +6,15 @@ import java.util.Map;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
-import com.coinslot.FiveCentSlot;
-import com.coinslot.ICoinSlot;
-import com.coinslot.TenCentSlot;
-import com.coinslot.TwentyFiveCentSlot;
-import com.exception.InvalidProductException;
-import com.product.IProduct;
-import com.product.ProductFactory;
-import com.util.Constants;
-import com.util.VendingMachineUtil;
+import main.java.coinslot.FiveCentSlot;
+import main.java.coinslot.ICoinSlot;
+import main.java.coinslot.TenCentSlot;
+import main.java.coinslot.TwentyFiveCentSlot;
+import main.java.exception.InvalidProductException;
+import main.java.product.IProduct;
+import main.java.product.ProductFactory;
+import main.java.util.Constants;
+import main.java.util.VendingMachineUtil;
 
 public class VendingMachine {
 	

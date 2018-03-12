@@ -1,10 +1,10 @@
-package com.coinslot;
+package main.java.coinslot;
 
 import java.math.BigDecimal;
 
-import com.util.Constants;
+import main.java.util.Constants;
 
-public class TenCentSlot implements ICoinSlot {
+public class TwentyFiveCentSlot implements ICoinSlot {
 
 	private String coinName;
 	
@@ -12,9 +12,9 @@ public class TenCentSlot implements ICoinSlot {
 	
 	private int coinCount;
 	
-	public TenCentSlot(int coinCount) {
-		this.coinName = Constants.DIME;
-		this.coinValue = new BigDecimal(Constants.TEN_CENTS);
+	public TwentyFiveCentSlot(int coinCount) {
+		this.coinName = Constants.QUARTER;
+		this.coinValue = new BigDecimal(Constants.TWENTY_FIVE_CENTS);
 		this.coinCount = coinCount;
 	}
 	
@@ -37,5 +37,5 @@ public class TenCentSlot implements ICoinSlot {
 	public int getCoinCount() {
 		return coinCount;
 	}
-	
+
 }

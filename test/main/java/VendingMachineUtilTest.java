@@ -1,11 +1,11 @@
-package com.kata;
+package main.java;
 import static junit.framework.TestCase.assertEquals;
 
 import java.math.BigDecimal;
 
 import org.junit.Test;
 
-import com.util.VendingMachineUtil;
+import main.java.util.VendingMachineUtil;
 
 public class VendingMachineUtilTest {
 	

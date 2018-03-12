@@ -1,7 +1,7 @@
-package com.product;
+package main.java.product;
 
-import com.exception.InvalidProductException;
-import com.util.Constants;
+import main.java.exception.InvalidProductException;
+import main.java.util.Constants;
 
 public class ProductFactory {
 

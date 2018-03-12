@@ -1,4 +1,4 @@
-package com.kata;
+package main.java;
 import static junit.framework.TestCase.assertEquals;
 
 import java.util.ArrayList;
@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.product.IProduct;
+import main.java.kata.VendingMachine;
+import main.java.product.IProduct;
 
 public class VendingMachineTest {
 
