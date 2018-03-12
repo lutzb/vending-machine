@@ -45,13 +45,13 @@ public class VendingMachine {
     }
     
     public void insertCoin(String coin) {
-    	if (coin.equals("nickel")) {
+    	if (coin.equals(Constants.NICKEL)) {
     		fiveCentSlot.addCoin();
     		customerBalance = customerBalance.add(new BigDecimal(Constants.FIVE_CENTS));
-    	} else if (coin.equals("dime")) {
+    	} else if (coin.equals(Constants.DIME)) {
     		tenCentSlot.addCoin();
     		customerBalance = customerBalance.add(new BigDecimal(Constants.TEN_CENTS));
-    	} else if (coin.equals("quarter")) {
+    	} else if (coin.equals(Constants.QUARTER)) {
     		twentyFiveCentSlot.addCoin();
     		customerBalance = customerBalance.add(new BigDecimal(Constants.TWENTY_FIVE_CENTS));
     	} else {
