@@ -1,5 +1,6 @@
 package com.kata;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,7 +16,7 @@ public class UserInteraction {
 		boolean userInteracting = true;
 		Scanner in = new Scanner(System.in);
 		
-		System.out.println("Greetings!");
+		printGreetingsArt();
 		
 		while(userInteracting) {
 			printMenu();
@@ -48,6 +49,17 @@ public class UserInteraction {
 		
 		System.out.println("Thank you for using this vending machine!");
 		in.close();
+	}
+
+	private static void printGreetingsArt() {
+		InputStream art = UserInteraction.class.getResourceAsStream("art.txt");
+		Scanner artIn = new Scanner(art);
+		
+		while (artIn.hasNext()) {
+			System.out.println(artIn.nextLine());
+		}
+		
+		artIn.close();
 	}
 
 	private static void printMenu() {
