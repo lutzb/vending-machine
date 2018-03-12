@@ -103,7 +103,7 @@ public class VendingMachine {
     private void updateDisplay() {
     	if (customerBalance.compareTo(new BigDecimal(Constants.ZERO)) > 0) {
     		display = "$" + VendingMachineUtil.padPriceWithZero(customerBalance);
-    	} else if (!canMakeChange()) {
+    	} else if (!ableToMakeChange()) {
     		display = Constants.EXACT_CHANGE;
     	} else {
     		display = Constants.INSERT_COINS;
@@ -135,7 +135,7 @@ public class VendingMachine {
     	inventory.put(Constants.CANDY, new MutableInt(2));
     }
     
-    private boolean canMakeChange() {
+    private boolean ableToMakeChange() {
     	// As a safety precaution, VendingMachine will need at least two of each coin to make change
     	return twentyFiveCentSlot.getCoinCount() >= 2 && 
     			tenCentSlot.getCoinCount() >= 2 && 

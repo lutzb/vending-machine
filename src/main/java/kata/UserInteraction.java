@@ -28,7 +28,7 @@ public class UserInteraction {
 					insertCoins(in);
 					break;
 				case "2":
-					buyProduct(in);
+					selectProduct(in);
 					break;
 				case "3":
 					checkProductReturn();
@@ -85,17 +85,17 @@ public class UserInteraction {
 				userInsertingCoins = false;
 			} else {
 				vendingMachine.insertCoin(coin);
-				System.out.println(vendingMachine.checkDisplay());				
+				System.out.println("Display: " + vendingMachine.checkDisplay());				
 			}
 		}
 	}
 	
-	private static void buyProduct(Scanner in) {
+	private static void selectProduct(Scanner in) {
 		System.out.print("Select a product (cola, candy, or chips): ");
 		String product = in.nextLine();
 		System.out.println("----------------------------------");
 		vendingMachine.pressProductButton(product);
-		System.out.println(vendingMachine.checkDisplay());
+		System.out.println("Display: " + vendingMachine.checkDisplay());
 	}
 	
 	private static void checkProductReturn() {
