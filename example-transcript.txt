@@ -1,0 +1,162 @@
+lutzb - /c/dev/git/vending-machine (master)
+$ mvn clean install
+[INFO] Scanning for projects...
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] Building VendingMachine 1.0.0
+[INFO] ------------------------------------------------------------------------
+[INFO]
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ VendingMachine ---
+[INFO]
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ VendingMachine ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO]
+[INFO] --- maven-compiler-plugin:3.7.0:compile (default-compile) @ VendingMachine ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 15 source files to C:\dev\git\vending-machine\target\classes
+[INFO]
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ VendingMachine ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory C:\dev\git\vending-machine\src\test\resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.7.0:testCompile (default-testCompile) @ VendingMachine ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 3 source files to C:\dev\git\vending-machine\target\test-classes
+[INFO]
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ VendingMachine ---
+[INFO] Surefire report directory: C:\dev\git\vending-machine\target\surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running main.java.ProductFactoryTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.063 sec
+Running main.java.VendingMachineTest
+Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec
+Running main.java.VendingMachineUtilTest
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec
+
+Results :
+
+Tests run: 32, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO]
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ VendingMachine ---
+[INFO] Building jar: C:\dev\git\vending-machine\target\VendingMachine-1.0.0.jar
+[INFO]
+[INFO] --- maven-assembly-plugin:2.2-beta-5:single (make-assembly) @ VendingMachine ---
+[INFO] Building jar: C:\dev\git\vending-machine\target\VendingMachine-jar-with-dependencies.jar
+[INFO]
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ VendingMachine ---
+[INFO] Installing C:\dev\git\vending-machine\target\VendingMachine-1.0.0.jar to C:\Users\lutzb\.m2\repository\VendingMachine\VendingMachine\1.0.0\VendingMachine-1.0.0.jar
+[INFO] Installing C:\dev\git\vending-machine\pom.xml to C:\Users\lutzb\.m2\repository\VendingMachine\VendingMachine\1.0.0\VendingMachine-1.0.0.pom
+[INFO] Installing C:\dev\git\vending-machine\target\VendingMachine-jar-with-dependencies.jar to C:\Users\lutzb\.m2\repository\VendingMachine\VendingMachine\1.0.0\VendingMachine-1.0.0-jar-with-dependencies.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 6.203 s
+[INFO] Finished at: 2018-03-13T10:50:13-04:00
+[INFO] Final Memory: 21M/209M
+[INFO] ------------------------------------------------------------------------
+
+lutzb - /c/dev/git/vending-machine (master)
+$ java -jar target/VendingMachine-jar-with-dependencies.jar
+--------------------------------------------------------------------
+ /$$    /$$                          / $$|
+| $$   | $$                          | $$| /$$
+| $$   | $$                          | $$||__/
+| $$   | $$  /$$$$$$  /$$$$$$$   /$$$$$$$ /$$ /$$$$$$$   /$$$$$$
+|  $$ / $$/ /$$__  $$| $$__  $$ /$$__  $$| $$| $$__  $$ /$$__  $$
+ \  $$ $$/ | $$$$$$$$| $$  \ $$| $$  | $$| $$| $$  \ $$| $$  \ $$
+  \  $$$/  | $$_____/| $$  | $$| $$  | $$| $$| $$  | $$| $$  | $$
+   \  $/   |  $$$$$$$| $$  | $$|  $$$$$$$| $$| $$  | $$|  $$$$$$$
+    \_/     \_______/|__/  |__/ \_______/|__/|__/  |__/ \____  $$
+                                                        /$$  \ $$
+                                                       |  $$$$$$/
+                                                       \_______/
+ /$$      /$$                     /$$       /$$
+| $$$    /$$$                    | $$      |__/
+| $$$$  /$$$$  /$$$$$$   /$$$$$$$| $$$$$$$  /$$ /$$$$$$$   /$$$$$$
+| $$ $$/$$ $$ |____  $$ /$$_____/| $$__  $$| $$| $$__  $$ /$$__  $$
+| $$  $$$| $$  /$$$$$$$| $$      | $$  \ $$| $$| $$  \ $$| $$$$$$$$
+| $$\  $ | $$ /$$__  $$| $$      | $$  | $$| $$| $$  | $$| $$_____/
+| $$ \/  | $$|  $$$$$$$|  $$$$$$$| $$  | $$| $$| $$  | $$|  $$$$$$$
+|__/     |__/ \_______/ \_______/|__/  |__/|__/|__/  |__/ \_______/
+--------------------------------------------------------------------
+----------------------------------
+1: Insert Coins
+2: Press Product Button
+3: Check Product Return
+4: Press Coin Return Button
+5: Check Coin Return
+6: Exit
+----------------------------------
+Display: INSERT COINS
+----------------------------------
+What would you like to do: 1
+----------------------------------
+Insert a coin (quarter, dime, or nickel) or type 'stop': quarter
+Display: $0.25
+Insert a coin (quarter, dime, or nickel) or type 'stop': quarter
+Display: $0.50
+Insert a coin (quarter, dime, or nickel) or type 'stop': quarter
+Display: $0.75
+Insert a coin (quarter, dime, or nickel) or type 'stop': stop
+----------------------------------
+1: Insert Coins
+2: Press Product Button
+3: Check Product Return
+4: Press Coin Return Button
+5: Check Coin Return
+6: Exit
+----------------------------------
+Display: $0.75
+----------------------------------
+What would you like to do: 2
+----------------------------------
+Select a product (cola, candy, or chips): candy
+----------------------------------
+Display: THANK YOU
+----------------------------------
+1: Insert Coins
+2: Press Product Button
+3: Check Product Return
+4: Press Coin Return Button
+5: Check Coin Return
+6: Exit
+----------------------------------
+Display: INSERT COINS
+----------------------------------
+What would you like to do: 3
+----------------------------------
+Product returned: candy
+----------------------------------
+1: Insert Coins
+2: Press Product Button
+3: Check Product Return
+4: Press Coin Return Button
+5: Check Coin Return
+6: Exit
+----------------------------------
+Display: INSERT COINS
+----------------------------------
+What would you like to do: 5
+----------------------------------
+Coin Returned: dime
+----------------------------------
+1: Insert Coins
+2: Press Product Button
+3: Check Product Return
+4: Press Coin Return Button
+5: Check Coin Return
+6: Exit
+----------------------------------
+Display: INSERT COINS
+----------------------------------
+What would you like to do: 6
+----------------------------------
+Thank you for using this vending machine!
+
+lutzb - /c/dev/git/vending-machine (master)
+$
