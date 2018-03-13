@@ -47,7 +47,6 @@ public class VendingMachine {
     }
     
     public void insertCoin(String coin) {
-
     	if (coin.equals(Constants.NICKEL)) {
         	customerCoins.add(coin);
     		customerBalance = customerBalance.add(new BigDecimal(Constants.FIVE_CENTS));
@@ -67,17 +66,15 @@ public class VendingMachine {
     public void pressProductButton(String buttonPressed) {
     	try {
     		IProduct product = ProductFactory.getProduct(buttonPressed);
-    		
-    		BigDecimal productPrice = product.getPrice();
-        	String productType = product.getType();
+
         	if (ableToDispenseProduct(product)) {
         		dispenseProduct(product);
         		moveCustomerCoinsToCoinSlots();
     			returnChange();
-    		} else if (inventory.get(productType).getValue() == 0) {
+    		} else if (inventory.get(product.getType()).getValue() == 0) {
     			display = Constants.SOLD_OUT;
     		} else {
-    			display = "PRICE: $" + VendingMachineUtil.padPriceWithZero(productPrice);
+    			display = "PRICE: $" + VendingMachineUtil.padPriceWithZero(product.getPrice());
     		}
     	} catch (InvalidProductException e) {
     		display = "INVALID PRODUCT";
