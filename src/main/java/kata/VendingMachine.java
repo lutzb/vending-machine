@@ -23,6 +23,7 @@ public class VendingMachine {
 	private ICoinSlot twentyFiveCentSlot;
 	private ICoinSlot tenCentSlot;
 	private ICoinSlot fiveCentSlot;
+	private ArrayList<String> customerCoins;
 	private ArrayList<String> coinReturn;
 	private IProduct productReturn;
 	private Map<String, MutableInt> inventory;
@@ -32,6 +33,7 @@ public class VendingMachine {
     	this.tenCentSlot = new TenCentSlot(tenCentCoins);
     	this.fiveCentSlot = new FiveCentSlot(fiveCentCoins);
     	this.customerBalance = new BigDecimal(Constants.ZERO);
+    	this.customerCoins = new ArrayList<String>();
     	this.coinReturn = new ArrayList<String>();
     	this.productReturn = null;
     	stockInventory();
@@ -45,14 +47,15 @@ public class VendingMachine {
     }
     
     public void insertCoin(String coin) {
+
     	if (coin.equals(Constants.NICKEL)) {
-    		fiveCentSlot.addCoin();
+        	customerCoins.add(coin);
     		customerBalance = customerBalance.add(new BigDecimal(Constants.FIVE_CENTS));
     	} else if (coin.equals(Constants.DIME)) {
-    		tenCentSlot.addCoin();
+        	customerCoins.add(coin);
     		customerBalance = customerBalance.add(new BigDecimal(Constants.TEN_CENTS));
     	} else if (coin.equals(Constants.QUARTER)) {
-    		twentyFiveCentSlot.addCoin();
+        	customerCoins.add(coin);
     		customerBalance = customerBalance.add(new BigDecimal(Constants.TWENTY_FIVE_CENTS));
     	} else {
     		coinReturn.add(coin);
@@ -69,6 +72,7 @@ public class VendingMachine {
         	String productType = product.getType();
         	if (ableToDispenseProduct(product)) {
         		dispenseProduct(product);
+        		moveCustomerCoinsToCoinSlots();
     			returnChange();
     		} else if (inventory.get(productType).getValue() == 0) {
     			display = Constants.SOLD_OUT;
@@ -79,9 +83,11 @@ public class VendingMachine {
     		display = "INVALID PRODUCT";
     	}
     }
-    
+
 	public void pressReturnChangeButton() {
-		returnChange();
+		coinReturn = new ArrayList<String>(customerCoins);
+		customerCoins.clear();
+		customerBalance = new BigDecimal(Constants.ZERO);
 		updateDisplay();
     }
     
@@ -91,6 +97,20 @@ public class VendingMachine {
 		productReturn = product;
 		display = Constants.THANK_YOU;
     }
+    
+	private void moveCustomerCoinsToCoinSlots() {
+		for (String customerCoin : customerCoins) {
+			if (customerCoin.equals(Constants.QUARTER)) {
+				twentyFiveCentSlot.addCoin();
+			} else if (customerCoin.equals(Constants.DIME)) {
+				tenCentSlot.addCoin();
+			} else if (customerCoin.equals(Constants.NICKEL)) {
+				fiveCentSlot.addCoin();
+			}
+		}
+		
+		customerCoins.clear();
+	}
 
     private void updateDisplay() {
     	if (customerBalance.compareTo(new BigDecimal(Constants.ZERO)) > 0) {
