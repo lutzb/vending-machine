@@ -18,10 +18,16 @@ public class Constants {
 	public static final String CHIPS = "chips";
 	public static final String CANDY = "candy";
 	
+	// Product Prices
+	public static final String COLA_PRICE = "1.00";
+	public static final String CANDY_PRICE = "0.65";
+	public static final String CHIPS_PRICE = "0.50";
+	
 	// General
 	public static final String SOLD_OUT = "SOLD OUT";
 	public static final String THANK_YOU = "THANK YOU";
 	public static final String EXACT_CHANGE = "EXACT CHANGE ONLY";
 	public static final String INSERT_COINS = "INSERT COINS";
+
 
 }

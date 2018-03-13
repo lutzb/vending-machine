@@ -1,15 +1,16 @@
 package main.java.product;
 import java.math.BigDecimal;
 
+import main.java.util.Constants;
+
 public class Candy implements IProduct {
 
 	private String type;
-	
 	private BigDecimal price;
 	
 	public Candy() {
-		this.type = "candy";
-		this.price = new BigDecimal("0.65");
+		this.type = Constants.CANDY;
+		this.price = new BigDecimal(Constants.CANDY_PRICE);
 	}
 	
 	public String getType() {
