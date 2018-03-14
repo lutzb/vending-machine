@@ -1,5 +1,9 @@
 package main.java.util;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Constants {
 	
 	// Coin names
@@ -29,5 +33,13 @@ public class Constants {
 	public static final String EXACT_CHANGE = "EXACT CHANGE ONLY";
 	public static final String INSERT_COINS = "INSERT COINS";
 
+	public static final Map<String, BigDecimal> coinValues;
+	
+	static {
+		coinValues = new HashMap<String, BigDecimal>();
+		coinValues.put(Constants.QUARTER, new BigDecimal(Constants.TWENTY_FIVE_CENTS));
+		coinValues.put(Constants.DIME, new BigDecimal(Constants.TEN_CENTS));
+		coinValues.put(Constants.NICKEL, new BigDecimal(Constants.FIVE_CENTS));
+	}
 
 }

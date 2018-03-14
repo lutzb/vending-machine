@@ -46,18 +46,14 @@ public class VendingMachine {
     	return currentDisplay;
     }
     
-    public void insertCoin(String coin) {
-    	if (coin.equals(Constants.NICKEL)) {
-        	customerCoins.add(coin);
-    		customerBalance = customerBalance.add(new BigDecimal(Constants.FIVE_CENTS));
-    	} else if (coin.equals(Constants.DIME)) {
-        	customerCoins.add(coin);
-    		customerBalance = customerBalance.add(new BigDecimal(Constants.TEN_CENTS));
-    	} else if (coin.equals(Constants.QUARTER)) {
-        	customerCoins.add(coin);
-    		customerBalance = customerBalance.add(new BigDecimal(Constants.TWENTY_FIVE_CENTS));
-    	} else {
+    public void insertCoin(String coin) {    	
+    	BigDecimal coinValue = Constants.coinValues.get(coin);
+    	
+    	if (coinValue == null) {
     		coinReturn.add(coin);
+    	} else {
+    		customerCoins.add(coin);
+    		customerBalance = customerBalance.add(coinValue);
     	}
     	
     	updateDisplay();
