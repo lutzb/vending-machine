@@ -1,8 +1,8 @@
 package main.java.kata;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -19,7 +19,7 @@ import main.java.util.VendingMachineUtil;
 public class VendingMachine {
 	
 	private String display;
-	private BigDecimal customerBalance;
+	private int customerBalance;
 	private ICoinSlot twentyFiveCentSlot;
 	private ICoinSlot tenCentSlot;
 	private ICoinSlot fiveCentSlot;
@@ -32,7 +32,7 @@ public class VendingMachine {
     	this.twentyFiveCentSlot = new TwentyFiveCentSlot(twentyFiveCentCoins);
     	this.tenCentSlot = new TenCentSlot(tenCentCoins);
     	this.fiveCentSlot = new FiveCentSlot(fiveCentCoins);
-    	this.customerBalance = new BigDecimal(Constants.ZERO);
+    	this.customerBalance = 0;
     	this.customerCoins = new ArrayList<String>();
     	this.coinReturn = new ArrayList<String>();
     	this.productReturn = null;
@@ -47,13 +47,13 @@ public class VendingMachine {
     }
     
     public void insertCoin(String coin) {    	
-    	BigDecimal coinValue = Constants.coinValues.get(coin);
+    	Optional<Integer> coinValue = Optional.ofNullable(Constants.coinValues.get(coin));
     	
-    	if (coinValue == null) {
-    		coinReturn.add(coin);
-    	} else {
+    	if (coinValue.isPresent()) {
     		customerCoins.add(coin);
-    		customerBalance = customerBalance.add(coinValue);
+    		customerBalance += coinValue.get();
+    	} else {
+    		coinReturn.add(coin);
     	}
     	
     	updateDisplay();
@@ -70,7 +70,7 @@ public class VendingMachine {
     		} else if (inventory.get(product.getType()).getValue() == 0) {
     			display = Constants.SOLD_OUT;
     		} else {
-    			display = "PRICE: $" + VendingMachineUtil.padPriceWithZero(product.getPrice());
+    			display = "PRICE: $" + VendingMachineUtil.centsToDollars(product.getPrice());
     		}
     	} catch (InvalidProductException e) {
     		display = "INVALID PRODUCT";
@@ -80,12 +80,12 @@ public class VendingMachine {
 	public void pressReturnChangeButton() {
 		coinReturn = new ArrayList<String>(customerCoins);
 		customerCoins.clear();
-		customerBalance = new BigDecimal(Constants.ZERO);
+		customerBalance = 0;
 		updateDisplay();
     }
     
     private void dispenseProduct(IProduct product) {
-		customerBalance = customerBalance.subtract(product.getPrice());
+		customerBalance -= product.getPrice();
 		inventory.get(product.getType()).decrement();
 		productReturn = product;
 		display = Constants.THANK_YOU;
@@ -106,8 +106,8 @@ public class VendingMachine {
 	}
 
     private void updateDisplay() {
-    	if (customerBalance.compareTo(new BigDecimal(Constants.ZERO)) > 0) {
-    		display = "$" + VendingMachineUtil.padPriceWithZero(customerBalance);
+    	if (customerBalance != 0) {
+    		display = "$" + VendingMachineUtil.centsToDollars(customerBalance);
     	} else if (!ableToMakeChange()) {
     		display = Constants.EXACT_CHANGE;
     	} else {
@@ -122,13 +122,13 @@ public class VendingMachine {
     }
     
     private void dispenseCoins(ICoinSlot coinSlot) {
-    	BigDecimal coinValue = coinSlot.getCoinValue();
+    	int coinValue = coinSlot.getCoinValue();
     	int coinsDue = VendingMachineUtil.determineNumberOfCoinsDue(coinValue, customerBalance);
 		
     	for (int i = 0; i < coinsDue; i++) {
 			coinSlot.removeCoin();
 			coinReturn.add(coinSlot.getCoinName());
-			customerBalance = customerBalance.subtract(coinValue);
+			customerBalance -= coinValue;
 		}
 	}
 
@@ -141,8 +141,7 @@ public class VendingMachine {
     }
 	
     private boolean ableToDispenseProduct(IProduct product) {
-    	return customerBalance.compareTo(product.getPrice()) >= 0 && 
-    			inventory.get(product.getType()).getValue() > 0;
+    	return customerBalance >= product.getPrice() && inventory.get(product.getType()).getValue() > 0;
 	}
     
     private boolean ableToMakeChange() {

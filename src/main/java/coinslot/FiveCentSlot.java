@@ -1,20 +1,16 @@
 package main.java.coinslot;
 
-import java.math.BigDecimal;
-
 import main.java.util.Constants;
 
 public class FiveCentSlot implements ICoinSlot {
 	
 	private String coinName;
-	
-	private BigDecimal coinValue;
-	
+	private int coinValue;
 	private int coinCount;
 	
 	public FiveCentSlot(int coinCount) {
 		this.coinName = Constants.NICKEL;
-		this.coinValue = new BigDecimal(Constants.FIVE_CENTS);
+		this.coinValue = Constants.FIVE_CENTS;
 		this.coinCount = coinCount;
 	}
 	
@@ -22,7 +18,7 @@ public class FiveCentSlot implements ICoinSlot {
 		return coinName;
 	}
 	
-	public BigDecimal getCoinValue() {
+	public int getCoinValue() {
 		return coinValue;
 	}
 	
@@ -37,4 +33,5 @@ public class FiveCentSlot implements ICoinSlot {
 	public int getCoinCount() {
 		return coinCount;
 	}
+	
 }

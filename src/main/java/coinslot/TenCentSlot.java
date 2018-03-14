@@ -1,20 +1,16 @@
 package main.java.coinslot;
 
-import java.math.BigDecimal;
-
 import main.java.util.Constants;
 
 public class TenCentSlot implements ICoinSlot {
 
 	private String coinName;
-	
-	private BigDecimal coinValue;
-	
+	private int coinValue;
 	private int coinCount;
 	
 	public TenCentSlot(int coinCount) {
 		this.coinName = Constants.DIME;
-		this.coinValue = new BigDecimal(Constants.TEN_CENTS);
+		this.coinValue = Constants.TEN_CENTS;
 		this.coinCount = coinCount;
 	}
 	
@@ -22,7 +18,7 @@ public class TenCentSlot implements ICoinSlot {
 		return coinName;
 	}
 	
-	public BigDecimal getCoinValue() {
+	public int getCoinValue() {
 		return coinValue;
 	}
 	

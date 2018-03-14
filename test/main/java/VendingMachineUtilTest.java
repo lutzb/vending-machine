@@ -1,8 +1,6 @@
 package main.java;
 import static junit.framework.TestCase.assertEquals;
 
-import java.math.BigDecimal;
-
 import org.junit.Test;
 
 import main.java.util.VendingMachineUtil;
@@ -10,43 +8,48 @@ import main.java.util.VendingMachineUtil;
 public class VendingMachineUtilTest {
 	
     @Test
-    public void whenPadPriceWithZeroIsGivenADoubleDigitValueItReturnsThatValue() {
-    	assertEquals("0.15", VendingMachineUtil.padPriceWithZero(new BigDecimal("0.15")));
+    public void whenConvertCentsToDollarStringIsGiven5CentsItReturnsTheCorrectString() {
+    	assertEquals("0.05", VendingMachineUtil.centsToDollars(5));
+    }
+	
+    @Test
+    public void whenConvertCentsToDollarStringIsGiven10CentsItReturnsTheCorrectString() {
+    	assertEquals("0.15", VendingMachineUtil.centsToDollars(15));
     }
     
     @Test
-    public void whenPadPriceWithZeroIsGivenASingleDigitValueItReturnsThatValuePaddedWithAZero() {
-    	assertEquals("0.10", VendingMachineUtil.padPriceWithZero(new BigDecimal("0.1")));
+    public void whenConvertCentsToDollarStringIsGiven15CentsItReturnsTheCorrectString() {
+    	assertEquals("0.50", VendingMachineUtil.centsToDollars(50));
+    }
+    
+    @Test
+    public void whenConvertCentsToDollarStringIsGiven100CentsItReturnsTheCorrectString() {
+    	assertEquals("1.00", VendingMachineUtil.centsToDollars(100));
     }
     
     @Test
     public void whenDetermineNumberOfCoinsDueIsGivenA50CentsBalanceAnd25CentsValueItReturns2() {
-    	BigDecimal customerBalance = new BigDecimal("0.50");
-    	assertEquals(2, VendingMachineUtil.determineNumberOfCoinsDue(new BigDecimal("0.25"), customerBalance));
+    	assertEquals(2, VendingMachineUtil.determineNumberOfCoinsDue(25, 50));
     }
     
     @Test
     public void whenDetermineNumberOfCoinsDueIsGivenA50CentsBalanceAnd10CentsValueItReturns5() {
-    	BigDecimal customerBalance = new BigDecimal("0.50");
-    	assertEquals(5, VendingMachineUtil.determineNumberOfCoinsDue(new BigDecimal("0.10"), customerBalance));
+    	assertEquals(5, VendingMachineUtil.determineNumberOfCoinsDue(10, 50));
     }
     
     @Test
     public void whenDetermineNumberOfCoinsDueIsGivenA50CentsBalanceAnd5CentsValueItReturns10() {
-    	BigDecimal customerBalance = new BigDecimal("0.50");
-    	assertEquals(10, VendingMachineUtil.determineNumberOfCoinsDue(new BigDecimal("0.05"), customerBalance));
+    	assertEquals(10, VendingMachineUtil.determineNumberOfCoinsDue(5, 50));
     }
     
     @Test
     public void whenDetermineNumberOfCoinsDueIsGivenA65CentsBalanceAnd25CentsItReturns2() {
-    	BigDecimal customerBalance = new BigDecimal("0.65");
-    	assertEquals(2, VendingMachineUtil.determineNumberOfCoinsDue(new BigDecimal("0.25"), customerBalance));
+    	assertEquals(2, VendingMachineUtil.determineNumberOfCoinsDue(25, 65));
     }
     
     @Test
     public void whenDetermineNumberOfCoinsDueIsGivenA65CentsBalanceAnd5CentsItReturns13() {
-    	BigDecimal customerBalance = new BigDecimal("0.65");
-    	assertEquals(13, VendingMachineUtil.determineNumberOfCoinsDue(new BigDecimal("0.05"), customerBalance));
+    	assertEquals(13, VendingMachineUtil.determineNumberOfCoinsDue(5, 65));
     }
 
 }

@@ -1,24 +1,14 @@
 package main.java.util;
 
-import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 public class VendingMachineUtil {
 
-	public static String padPriceWithZero(BigDecimal amount) {
-    	String amountStr = String.valueOf(amount);
-    	// Check number of decimal places
-		int indexOfDecimal = amountStr.indexOf(".");
-		String decimalPlaces = amountStr.substring(indexOfDecimal + 1);
-		
-		// Add a '0' to the end of the display if balance only has one decimal place
-		if (decimalPlaces.length() < 2) {
-			amountStr += "0";
-		}
-		
-		return amountStr;
+	public static String centsToDollars(int amount) {
+		return (new DecimalFormat("0.00")).format(amount/100.0);
     }
 
-	public static int determineNumberOfCoinsDue(BigDecimal coinValue, BigDecimal customerBalance) {
-		return customerBalance.divide(coinValue).toBigInteger().intValue();
+	public static int determineNumberOfCoinsDue(int coinValue, int customerBalance) {
+		return customerBalance / coinValue;
 	}
 }

@@ -1,6 +1,5 @@
 package main.java.util;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,10 +11,9 @@ public class Constants {
 	public static final String NICKEL = "nickel";
 	
 	// Coin values
-	public static final String TWENTY_FIVE_CENTS = "0.25";
-	public static final String TEN_CENTS = "0.10";
-	public static final String FIVE_CENTS = "0.05";
-	public static final String ZERO = "0.00";
+	public static final int TWENTY_FIVE_CENTS = 25;
+	public static final int TEN_CENTS = 10;
+	public static final int FIVE_CENTS = 5;
 	
 	// Products
 	public static final String COLA = "cola";
@@ -23,9 +21,9 @@ public class Constants {
 	public static final String CANDY = "candy";
 	
 	// Product Prices
-	public static final String COLA_PRICE = "1.00";
-	public static final String CANDY_PRICE = "0.65";
-	public static final String CHIPS_PRICE = "0.50";
+	public static final int COLA_PRICE = 100;
+	public static final int CANDY_PRICE = 65;
+	public static final int CHIPS_PRICE = 50;
 	
 	// General
 	public static final String SOLD_OUT = "SOLD OUT";
@@ -33,13 +31,13 @@ public class Constants {
 	public static final String EXACT_CHANGE = "EXACT CHANGE ONLY";
 	public static final String INSERT_COINS = "INSERT COINS";
 
-	public static final Map<String, BigDecimal> coinValues;
+	public static final Map<String, Integer> coinValues;
 	
 	static {
-		coinValues = new HashMap<String, BigDecimal>();
-		coinValues.put(Constants.QUARTER, new BigDecimal(Constants.TWENTY_FIVE_CENTS));
-		coinValues.put(Constants.DIME, new BigDecimal(Constants.TEN_CENTS));
-		coinValues.put(Constants.NICKEL, new BigDecimal(Constants.FIVE_CENTS));
+		coinValues = new HashMap<String, Integer>();
+		coinValues.put(Constants.QUARTER, Constants.TWENTY_FIVE_CENTS);
+		coinValues.put(Constants.DIME, Constants.TEN_CENTS);
+		coinValues.put(Constants.NICKEL, Constants.FIVE_CENTS);
 	}
 
 }
