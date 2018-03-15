@@ -6,10 +6,8 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
-import main.java.coinslot.FiveCentSlot;
-import main.java.coinslot.ICoinSlot;
-import main.java.coinslot.TenCentSlot;
-import main.java.coinslot.TwentyFiveCentSlot;
+import main.java.coinstorage.CoinStorage;
+import main.java.exception.InvalidCoinException;
 import main.java.exception.InvalidProductException;
 import main.java.product.IProduct;
 import main.java.product.ProductFactory;
@@ -20,18 +18,14 @@ public class VendingMachine {
 	
 	private String display;
 	private int customerBalance;
-	private ICoinSlot twentyFiveCentSlot;
-	private ICoinSlot tenCentSlot;
-	private ICoinSlot fiveCentSlot;
+	private CoinStorage coinStorage;
 	private ArrayList<String> customerCoins;
 	private ArrayList<String> coinReturn;
 	private IProduct productReturn;
 	private Map<String, MutableInt> inventory;
 
     public VendingMachine(int twentyFiveCentCoins, int tenCentCoins, int fiveCentCoins) {
-    	this.twentyFiveCentSlot = new TwentyFiveCentSlot(twentyFiveCentCoins);
-    	this.tenCentSlot = new TenCentSlot(tenCentCoins);
-    	this.fiveCentSlot = new FiveCentSlot(fiveCentCoins);
+    	this.coinStorage = new CoinStorage(twentyFiveCentCoins, tenCentCoins, fiveCentCoins);
     	this.customerBalance = 0;
     	this.customerCoins = new ArrayList<String>();
     	this.coinReturn = new ArrayList<String>();
@@ -65,8 +59,9 @@ public class VendingMachine {
 
         	if (ableToDispenseProduct(product)) {
         		dispenseProduct(product);
-        		moveCustomerCoinsToCoinSlots();
-    			returnChange();
+        		moveCustomerCoinsToStorage();
+        		coinStorage.dispenseChange(customerBalance, coinReturn);
+        		customerBalance = 0;
     		} else if (inventory.get(product.getType()).getValue() == 0) {
     			display = Constants.SOLD_OUT;
     		} else {
@@ -91,46 +86,24 @@ public class VendingMachine {
 		display = Constants.THANK_YOU;
     }
     
-	private void moveCustomerCoinsToCoinSlots() {
-		for (String customerCoin : customerCoins) {
-			if (customerCoin.equals(Constants.QUARTER)) {
-				twentyFiveCentSlot.addCoin();
-			} else if (customerCoin.equals(Constants.DIME)) {
-				tenCentSlot.addCoin();
-			} else if (customerCoin.equals(Constants.NICKEL)) {
-				fiveCentSlot.addCoin();
-			}
+	private void moveCustomerCoinsToStorage() {
+		try {
+			coinStorage.stashCoins(customerCoins);
+			customerCoins.clear();
+		} catch (InvalidCoinException e) {
+			display = "INTERNAL ERROR";
 		}
-		
-		customerCoins.clear();
 	}
 
     private void updateDisplay() {
     	if (customerBalance != 0) {
     		display = "$" + VendingMachineUtil.centsToDollars(customerBalance);
-    	} else if (!ableToMakeChange()) {
+    	} else if (!coinStorage.ableToMakeChange()) {
     		display = Constants.EXACT_CHANGE;
     	} else {
     		display = Constants.INSERT_COINS;
     	}
     }
-
-	private void returnChange() {
-		dispenseCoins(twentyFiveCentSlot);
-		dispenseCoins(tenCentSlot);
-		dispenseCoins(fiveCentSlot);
-    }
-    
-    private void dispenseCoins(ICoinSlot coinSlot) {
-    	int coinValue = coinSlot.getCoinValue();
-    	int coinsDue = VendingMachineUtil.determineNumberOfCoinsDue(coinValue, customerBalance);
-		
-    	for (int i = 0; i < coinsDue; i++) {
-			coinSlot.removeCoin();
-			coinReturn.add(coinSlot.getCoinName());
-			customerBalance -= coinValue;
-		}
-	}
 
 	private void stockInventory() {
     	// Vending Machine will hold 2 of each product
@@ -142,13 +115,6 @@ public class VendingMachine {
 	
     private boolean ableToDispenseProduct(IProduct product) {
     	return customerBalance >= product.getPrice() && inventory.get(product.getType()).getValue() > 0;
-	}
-    
-    private boolean ableToMakeChange() {
-    	// As a safety precaution, VendingMachine will need at least two of each coin to make change
-    	return twentyFiveCentSlot.getCoinCount() >= 2 && 
-    			tenCentSlot.getCoinCount() >= 2 && 
-    			fiveCentSlot.getCoinCount() >= 2;
 	}
     
     public void clearProductReturn() {

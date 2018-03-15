@@ -1,16 +1,16 @@
-package main.java.coinslot;
+package main.java.coinstorage;
 
 import main.java.util.Constants;
 
-public class FiveCentSlot implements ICoinSlot {
-	
+public class TenCentSlot implements ICoinSlot {
+
 	private String coinName;
 	private int coinValue;
 	private int coinCount;
 	
-	public FiveCentSlot(int coinCount) {
-		this.coinName = Constants.NICKEL;
-		this.coinValue = Constants.FIVE_CENTS;
+	public TenCentSlot(int coinCount) {
+		this.coinName = Constants.DIME;
+		this.coinValue = Constants.TEN_CENTS;
 		this.coinCount = coinCount;
 	}
 	

@@ -1,4 +1,4 @@
-package main.java.coinslot;
+package main.java.coinstorage;
 
 import main.java.util.Constants;
 

@@ -1,4 +1,4 @@
-package main.java.coinslot;
+package main.java.coinstorage;
 
 public interface ICoinSlot {
 	
