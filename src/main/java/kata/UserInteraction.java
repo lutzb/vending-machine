@@ -7,46 +7,46 @@ import java.util.Scanner;
 import main.java.product.IProduct;
 
 public class UserInteraction {
-	
+
 	private static VendingMachine vendingMachine;
 
 	public static void main(String[] args) {
-		
+
 		vendingMachine = new VendingMachine(5, 5, 5);
 		boolean userInteracting = true;
 		Scanner in = new Scanner(System.in);
-		
+
 		printGreetingsArt();
-		
-		while(userInteracting) {
+
+		while (userInteracting) {
 			printMenu();
 			String userInput = in.nextLine();
 			System.out.println("----------------------------------");
-			
+
 			switch (userInput) {
-				case "1":
-					insertCoins(in);
-					break;
-				case "2":
-					selectProduct(in);
-					break;
-				case "3":
-					checkProductReturn();
-					break;
-				case "4":
-					returnChange();
-					break;
-				case "5":
-					checkCoinReturn();
-					break;
-				case "6":
-					userInteracting = false;
-					break;
-				default:
-					System.out.println("I'm not sure what you're trying to do... Please enter a single number 1 through 6.");
+			case "1":
+				insertCoins(in);
+				break;
+			case "2":
+				selectProduct(in);
+				break;
+			case "3":
+				checkProductReturn();
+				break;
+			case "4":
+				returnChange();
+				break;
+			case "5":
+				checkCoinReturn();
+				break;
+			case "6":
+				userInteracting = false;
+				break;
+			default:
+				System.out.println("I'm not sure what you're trying to do... Please enter a single number 1 through 6.");
 			}
 		}
-		
+
 		System.out.println("Thank you for using this vending machine!");
 		in.close();
 	}
@@ -54,11 +54,11 @@ public class UserInteraction {
 	private static void printGreetingsArt() {
 		InputStream art = UserInteraction.class.getResourceAsStream("art.txt");
 		Scanner artIn = new Scanner(art);
-		
+
 		while (artIn.hasNext()) {
 			System.out.println(artIn.nextLine());
 		}
-		
+
 		artIn.close();
 	}
 
@@ -85,11 +85,11 @@ public class UserInteraction {
 				userInsertingCoins = false;
 			} else {
 				vendingMachine.insertCoin(coin);
-				System.out.println("Display: " + vendingMachine.checkDisplay());				
+				System.out.println("Display: " + vendingMachine.checkDisplay());
 			}
 		}
 	}
-	
+
 	private static void selectProduct(Scanner in) {
 		System.out.print("Select a product (cola, candy, or chips): ");
 		String product = in.nextLine();
@@ -97,21 +97,21 @@ public class UserInteraction {
 		vendingMachine.pressProductButton(product);
 		System.out.println("Display: " + vendingMachine.checkDisplay());
 	}
-	
+
 	private static void checkProductReturn() {
 		IProduct product = vendingMachine.getProductReturn();
 		vendingMachine.clearProductReturn();
 		if (product == null) {
 			System.out.println("Product return is empty.");
 		} else {
-			System.out.println("Product returned: " + product.getType());			
+			System.out.println("Product returned: " + product.getType());
 		}
 	}
-	
+
 	private static void returnChange() {
 		vendingMachine.pressReturnChangeButton();
 	}
-	
+
 	private static void checkCoinReturn() {
 		ArrayList<String> returnedCoins = vendingMachine.getCoinReturn();
 		if (returnedCoins.isEmpty()) {

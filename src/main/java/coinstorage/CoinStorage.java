@@ -8,30 +8,30 @@ import main.java.util.Constants;
 import main.java.util.VendingMachineUtil;
 
 public class CoinStorage {
-	
+
 	private ICoinSlot twentyFiveCentSlot;
 	private ICoinSlot tenCentSlot;
 	private ICoinSlot fiveCentSlot;
 	private int currentChangeDue;
-	
+
 	public CoinStorage(int twentyFiveCentCoins, int tenCentCoins, int fiveCentCoins) {
-    	this.twentyFiveCentSlot = new TwentyFiveCentSlot(twentyFiveCentCoins);
-    	this.tenCentSlot = new TenCentSlot(tenCentCoins);
-    	this.fiveCentSlot = new FiveCentSlot(fiveCentCoins);
-    	this.currentChangeDue = 0;
+		this.twentyFiveCentSlot = new TwentyFiveCentSlot(twentyFiveCentCoins);
+		this.tenCentSlot = new TenCentSlot(tenCentCoins);
+		this.fiveCentSlot = new FiveCentSlot(fiveCentCoins);
+		this.currentChangeDue = 0;
 	}
-	
-	public void stashCoins(List<String> coins) throws InvalidCoinException{
+
+	public void stashCoins(List<String> coins) throws InvalidCoinException {
 		for (String coin : coins) {
 			stashCoin(coin);
 		}
 	}
-	
+
 	public boolean ableToMakeChange() {
 		// As a safety precaution, VendingMachine will need at least two of each coin to make change
-    	return twentyFiveCentSlot.getCoinCount() >= 2 && 
-    			tenCentSlot.getCoinCount() >= 2 && 
-    			fiveCentSlot.getCoinCount() >= 2;
+		return twentyFiveCentSlot.getCoinCount() >= 2 
+				&& tenCentSlot.getCoinCount() >= 2 
+				&& fiveCentSlot.getCoinCount() >= 2;
 	}
 
 	public void dispenseChange(int changeDue, ArrayList<String> coinReturn) {
@@ -40,7 +40,7 @@ public class CoinStorage {
 		dispenseCoins(tenCentSlot, coinReturn);
 		dispenseCoins(fiveCentSlot, coinReturn);
 	}
-	
+
 	private void stashCoin(String customerCoin) throws InvalidCoinException {
 		if (customerCoin.equals(Constants.QUARTER)) {
 			twentyFiveCentSlot.addCoin();
@@ -52,17 +52,17 @@ public class CoinStorage {
 			throw new InvalidCoinException(customerCoin);
 		}
 	}
-	
-    private void dispenseCoins(ICoinSlot coinSlot, ArrayList<String> coinReturn) {
-    	int coinValue = coinSlot.getCoinValue();
-    	int coinsDue = VendingMachineUtil.determineNumberOfCoinsDue(coinValue, currentChangeDue);
-		
-    	for (int i = 0; i < coinsDue; i++) {
+
+	private void dispenseCoins(ICoinSlot coinSlot, ArrayList<String> coinReturn) {
+		int coinValue = coinSlot.getCoinValue();
+		int coinsDue = VendingMachineUtil.determineNumberOfCoinsDue(coinValue, currentChangeDue);
+
+		for (int i = 0; i < coinsDue; i++) {
 			coinSlot.removeCoin();
 			coinReturn.add(coinSlot.getCoinName());
 			currentChangeDue -= coinValue;
 		}
-    }
+	}
 
 	public ICoinSlot getTwentyFiveCentSlot() {
 		return twentyFiveCentSlot;

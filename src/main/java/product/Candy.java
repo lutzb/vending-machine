@@ -6,12 +6,12 @@ public class Candy implements IProduct {
 
 	private String type;
 	private int price;
-	
+
 	public Candy() {
 		this.type = Constants.CANDY;
 		this.price = Constants.CANDY_PRICE;
 	}
-	
+
 	public String getType() {
 		return this.type;
 	}
@@ -19,5 +19,5 @@ public class Candy implements IProduct {
 	public int getPrice() {
 		return this.price;
 	}
-	
+
 }
