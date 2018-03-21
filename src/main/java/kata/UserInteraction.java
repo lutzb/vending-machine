@@ -31,19 +31,16 @@ public class UserInteraction {
 				selectProduct(in);
 				break;
 			case "3":
-				checkProductReturn();
-				break;
-			case "4":
 				returnChange();
 				break;
-			case "5":
+			case "4":
 				checkCoinReturn();
 				break;
-			case "6":
+			case "5":
 				userInteracting = false;
 				break;
 			default:
-				System.out.println("I'm not sure what you're trying to do... Please enter a single number 1 through 6.");
+				System.out.println("I'm not sure what you're trying to do... Please enter a single number 1 through 5.");
 			}
 		}
 
@@ -96,16 +93,6 @@ public class UserInteraction {
 		System.out.println("----------------------------------");
 		vendingMachine.pressProductButton(product);
 		System.out.println("Display: " + vendingMachine.checkDisplay());
-	}
-
-	private static void checkProductReturn() {
-		IProduct product = vendingMachine.getProductReturn();
-		vendingMachine.clearProductReturn();
-		if (product == null) {
-			System.out.println("Product return is empty.");
-		} else {
-			System.out.println("Product returned: " + product.getType());
-		}
 	}
 
 	private static void returnChange() {

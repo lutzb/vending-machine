@@ -22,7 +22,6 @@ public class VendingMachine {
 	private CoinStorage coinStorage;
 	private ArrayList<String> customerCoins;
 	private ArrayList<String> coinReturn;
-	private IProduct productReturn;
 	private Map<String, MutableInt> inventory;
 
 	public VendingMachine(int twentyFiveCentCoins, int tenCentCoins, int fiveCentCoins) {
@@ -30,7 +29,6 @@ public class VendingMachine {
 		this.customerBalance = 0;
 		this.customerCoins = new ArrayList<String>();
 		this.coinReturn = new ArrayList<String>();
-		this.productReturn = null;
 		stockInventory();
 		updateDisplay();
 	}
@@ -54,23 +52,35 @@ public class VendingMachine {
 		updateDisplay();
 	}
 
-	public void pressProductButton(String buttonPressed) {
+	public IProduct pressProductButton(String buttonPressed) {
+		IProduct product = null;
+		
 		try {
-			IProduct product = ProductFactory.getProduct(buttonPressed);
+			 product = ProductFactory.getProduct(buttonPressed);
 
 			if (ableToDispenseProduct(product)) {
-				dispenseProduct(product);
-				moveCustomerCoinsToStorage();
-				coinStorage.dispenseChange(customerBalance, coinReturn);
-				customerBalance = 0;
+				processSale(product);
 			} else if (inventory.get(product.getType()).getValue() == 0) {
 				display = Constants.SOLD_OUT;
+				product = null;
 			} else {
 				display = "PRICE: $" + VendingMachineUtil.centsToDollars(product.getPrice());
+				product = null;
 			}
 		} catch (InvalidProductException e) {
 			display = "INVALID PRODUCT";
 		}
+		
+		return product;
+	}
+
+	private void processSale(IProduct product) {
+		moveCustomerCoinsToStorage();
+		customerBalance -= product.getPrice();
+		inventory.get(product.getType()).decrement();
+		coinStorage.dispenseChange(customerBalance, coinReturn);
+		display = Constants.THANK_YOU;
+		customerBalance = 0;
 	}
 
 	public void pressReturnChangeButton() {
@@ -78,13 +88,6 @@ public class VendingMachine {
 		customerCoins.clear();
 		customerBalance = 0;
 		updateDisplay();
-	}
-
-	private void dispenseProduct(IProduct product) {
-		customerBalance -= product.getPrice();
-		inventory.get(product.getType()).decrement();
-		productReturn = product;
-		display = Constants.THANK_YOU;
 	}
 
 	private void moveCustomerCoinsToStorage() {
@@ -116,14 +119,6 @@ public class VendingMachine {
 
 	private boolean ableToDispenseProduct(IProduct product) {
 		return customerBalance >= product.getPrice() && inventory.get(product.getType()).getValue() > 0;
-	}
-
-	public void clearProductReturn() {
-		productReturn = null;
-	}
-
-	public IProduct getProductReturn() {
-		return productReturn;
 	}
 
 	public ArrayList<String> getCoinReturn() {
