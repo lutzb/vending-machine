@@ -10,11 +10,12 @@ import main.java.util.Constants;
 public class ProductFactory {
 	
 	private static final Map<String, Supplier<IProduct>> products = new HashMap<>();
-		static {
-			products.put(Constants.COLA, Cola::new);
-			products.put(Constants.CANDY, Candy::new);
-			products.put(Constants.CHIPS, Chips::new);
-	  }
+	
+	static {
+		products.put(Constants.COLA, Cola::new);
+		products.put(Constants.CANDY, Candy::new);
+		products.put(Constants.CHIPS, Chips::new);
+	}
 
 	public static IProduct getProduct(String productType) throws InvalidProductException {
 		Supplier<IProduct> product = products.get(productType);
