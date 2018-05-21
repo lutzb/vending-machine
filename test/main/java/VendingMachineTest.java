@@ -3,12 +3,15 @@ package main.java;
 import static junit.framework.TestCase.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Map;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.junit.Before;
 import org.junit.Test;
 
 import main.java.kata.VendingMachine;
 import main.java.product.IProduct;
+import main.java.util.Constants;
 
 public class VendingMachineTest {
 
@@ -71,6 +74,27 @@ public class VendingMachineTest {
 		// Initialiaze VendingMachine without any coins
 		vendingMachine = new VendingMachine(0, 0, 0);
 		assertEquals("EXACT CHANGE ONLY", vendingMachine.checkDisplay());
+	}
+	
+	//  -------------- checkInventory tests --------------
+	@Test
+	public void whenUserChecksInventoryTheMachineReturnsTheItemsInStock() {
+		Map<String, MutableInt> inventory = vendingMachine.checkInventory();
+		assertEquals(new MutableInt(2), inventory.get(Constants.CANDY));
+		assertEquals(new MutableInt(2), inventory.get(Constants.CHIPS));
+		assertEquals(new MutableInt(2), inventory.get(Constants.COLA));
+	}
+
+	@Test
+	public void whenUserBuysAnItemAndChecksInventoryTheMachineReturnsTheItemsInStock() {
+		vendingMachine.insertCoin("quarter");
+		vendingMachine.insertCoin("quarter");
+		vendingMachine.pressProductButton("chips");
+		
+		Map<String, MutableInt> inventory = vendingMachine.checkInventory();
+		assertEquals(new MutableInt(2), inventory.get("candy"));
+		assertEquals(new MutableInt(1), inventory.get("chips"));
+		assertEquals(new MutableInt(2), inventory.get("cola"));
 	}
 
 	// -------------- getCoinReturn() tests --------------

@@ -2,7 +2,10 @@ package main.java.kata;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
+
+import org.apache.commons.lang3.mutable.MutableInt;
 
 import main.java.product.IProduct;
 
@@ -25,18 +28,21 @@ public class UserInteraction {
 
 			switch (userInput) {
 			case "1":
-				insertCoins(in);
+				checkInventory();
 				break;
 			case "2":
-				selectProduct(in);
+				insertCoins(in);
 				break;
 			case "3":
-				returnChange();
+				selectProduct(in);
 				break;
 			case "4":
-				checkCoinReturn();
+				returnChange();
 				break;
 			case "5":
+				checkCoinReturn();
+				break;
+			case "6":
 				userInteracting = false;
 				break;
 			default:
@@ -61,9 +67,9 @@ public class UserInteraction {
 
 	private static void printMenu() {
 		System.out.println("----------------------------------");
-		System.out.println("1: Insert Coins");
-		System.out.println("2: Press Product Button");
-		System.out.println("3: Check Product Return");
+		System.out.println("1: Check Inventory");
+		System.out.println("2: Insert Coins");
+		System.out.println("3: Purchase Product");
 		System.out.println("4: Press Coin Return Button");
 		System.out.println("5: Check Coin Return");
 		System.out.println("6: Exit");
@@ -71,6 +77,15 @@ public class UserInteraction {
 		System.out.println("Display: " + vendingMachine.checkDisplay());
 		System.out.println("----------------------------------");
 		System.out.print("What would you like to do: ");
+	}
+	
+	private static void checkInventory() {
+		Map<String, MutableInt> inventory = vendingMachine.checkInventory();
+		System.out.println("Current Inventory");
+		System.out.println("----------------------------------");
+		for (String productName : inventory.keySet()){
+            System.out.println("Product: " + productName.toString() + " - Quantity: " + inventory.get(productName).toString());
+		} 
 	}
 
 	private static void insertCoins(Scanner in) {
@@ -89,10 +104,14 @@ public class UserInteraction {
 
 	private static void selectProduct(Scanner in) {
 		System.out.print("Select a product (cola, candy, or chips): ");
-		String product = in.nextLine();
+		String productStr = in.nextLine();
 		System.out.println("----------------------------------");
-		vendingMachine.pressProductButton(product);
+		IProduct product = vendingMachine.pressProductButton(productStr);
 		System.out.println("Display: " + vendingMachine.checkDisplay());
+		
+		if (product != null) {
+			System.out.println("Product: " + product.toString());	
+		}
 	}
 
 	private static void returnChange() {

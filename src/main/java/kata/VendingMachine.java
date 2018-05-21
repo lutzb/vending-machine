@@ -38,6 +38,10 @@ public class VendingMachine {
 		updateDisplay();
 		return currentDisplay;
 	}
+	
+	public Map<String, MutableInt> checkInventory() {
+		return inventory;
+	}
 
 	public void insertCoin(String coin) {
 		Optional<Integer> coinValue = Optional.ofNullable(Constants.coinValues.get(coin));
@@ -128,4 +132,5 @@ public class VendingMachine {
 	public void clearCoinReturn() {
 		coinReturn.clear();
 	}
+	
 }
