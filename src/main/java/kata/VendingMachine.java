@@ -1,5 +1,6 @@
 package main.java.kata;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +12,6 @@ import main.java.exception.InvalidProductException;
 import main.java.product.IProduct;
 import main.java.product.ProductFactory;
 import main.java.util.Constants;
-import main.java.util.VendingMachineUtil;
 
 public class VendingMachine {
 
@@ -66,7 +66,7 @@ public class VendingMachine {
                 display = Constants.SOLD_OUT;
                 product = null;
             } else {
-                display = "PRICE: $" + VendingMachineUtil.centsToDollars(product.getPrice());
+                display = "PRICE: $" + centsToDollars(product.getPrice());
                 product = null;
             }
         } catch (InvalidProductException e) {
@@ -103,7 +103,7 @@ public class VendingMachine {
 
     private void updateDisplay() {
         if (customerBalance != 0) {
-            display = "$" + VendingMachineUtil.centsToDollars(customerBalance);
+            display = "$" + centsToDollars(customerBalance);
         } else if (!coinStorage.ableToMakeChange()) {
             display = Constants.EXACT_CHANGE;
         } else {
@@ -121,6 +121,10 @@ public class VendingMachine {
 
     private boolean ableToDispenseProduct(IProduct product) {
         return customerBalance >= product.getPrice() && inventory.get(product.getType()).getValue() > 0;
+    }
+
+    public static String centsToDollars(int amount) {
+        return (new DecimalFormat("0.00")).format(amount / 100.0);
     }
 
     public ArrayList<String> getCoinReturn() {

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import main.java.exception.InvalidCoinException;
 import main.java.util.Constants;
-import main.java.util.VendingMachineUtil;
 
 public class CoinStorage {
 
@@ -54,7 +53,7 @@ public class CoinStorage {
 
     private void dispenseCoins(ICoinSlot coinSlot, ArrayList<String> coinReturn) {
         int coinValue = coinSlot.getCoinValue();
-        int coinsDue = VendingMachineUtil.determineNumberOfCoinsDue(coinValue, currentChangeDue);
+        int coinsDue = determineNumberOfCoinsDue(coinValue, currentChangeDue);
 
         for (int i = 0; i < coinsDue; i++) {
             coinSlot.removeCoin();
@@ -73,5 +72,9 @@ public class CoinStorage {
 
     public ICoinSlot getFiveCentSlot() {
         return fiveCentSlot;
+    }
+
+        public static int determineNumberOfCoinsDue(int coinValue, int customerBalance) {
+        return customerBalance / coinValue;
     }
 }
