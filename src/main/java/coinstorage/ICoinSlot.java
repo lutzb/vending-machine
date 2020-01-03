@@ -2,14 +2,13 @@ package main.java.coinstorage;
 
 public interface ICoinSlot {
 
-	public String getCoinName();
+    public String getCoinName();
 
-	public int getCoinValue();
+    public int getCoinValue();
 
-	public void addCoin();
+    public void addCoin();
 
-	public void removeCoin();
+    public void removeCoin();
 
-	public int getCoinCount();
-
+    public int getCoinCount();
 }

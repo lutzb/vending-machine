@@ -2,8 +2,7 @@ package main.java.product;
 
 public interface IProduct {
 
-	public String getType();
+    public String getType();
 
-	public int getPrice();
-
+    public int getPrice();
 }
