@@ -173,6 +173,14 @@ public class VendingMachineTest {
         assertEquals("INSERT COINS", vendingMachine.checkDisplay());
     }
 
+        @Test
+    public void whenUserPressesSushiButtonWithoutInsertingAnyMoneyVendingMachineDisplaysThePriceOfSushiThenResetsTheDisplay() {
+        vendingMachine.pressProductButton("sushi");
+
+        assertEquals("PRICE: $8.75", vendingMachine.checkDisplay());
+        assertEquals("INSERT COINS", vendingMachine.checkDisplay());
+    }
+
     @Test
     public void whenUserInsertsExactChangeAndPressesColaButtonVendingMachineDispensesCola() {
         vendingMachine.insertCoin("quarter");

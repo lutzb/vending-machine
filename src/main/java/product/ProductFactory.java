@@ -14,6 +14,7 @@ public class ProductFactory {
         products.put(Constants.COLA, Cola::new);
         products.put(Constants.CANDY, Candy::new);
         products.put(Constants.CHIPS, Chips::new);
+        products.put(Constants.SUSHI, Sushi::new);
     }
 
     public static IProduct getProduct(String productType) throws InvalidProductException {

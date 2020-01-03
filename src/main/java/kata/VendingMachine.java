@@ -117,6 +117,7 @@ public class VendingMachine {
         inventory.put(Constants.COLA, new MutableInt(2));
         inventory.put(Constants.CHIPS, new MutableInt(2));
         inventory.put(Constants.CANDY, new MutableInt(2));
+        inventory.put(Constants.SUSHI, new MutableInt(2));
     }
 
     private boolean ableToDispenseProduct(IProduct product) {

@@ -26,6 +26,12 @@ public class ProductFactoryTest {
         assertEquals("chips", product.getType());
     }
 
+        @Test
+    public void whenProductFactoryIsPassedSushiItReturnsSushiProduct() throws InvalidProductException {
+        IProduct product = ProductFactory.getProduct("sushi");
+        assertEquals("sushi", product.getType());
+    }
+
     @Test(expected = InvalidProductException.class)
     public void whenProductFactoryIsPassedANullItThrowsAnException() throws InvalidProductException {
         ProductFactory.getProduct(null);

@@ -19,11 +19,13 @@ public class Constants {
     public static final String COLA = "cola";
     public static final String CHIPS = "chips";
     public static final String CANDY = "candy";
+    public static final String SUSHI = "sushi";
 
     // Product Prices
     public static final int COLA_PRICE = 100;
     public static final int CANDY_PRICE = 65;
     public static final int CHIPS_PRICE = 50;
+    public static final int SUSHI_PRICE = 875;
 
     // General
     public static final String SOLD_OUT = "SOLD OUT";

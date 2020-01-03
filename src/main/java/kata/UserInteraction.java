@@ -101,7 +101,7 @@ public class UserInteraction {
     }
 
     private static void selectProduct(Scanner in) {
-        System.out.print("Select a product (cola, candy, or chips): ");
+        System.out.print("Select a product (cola, candy, chips, or sushi): ");
         String productStr = in.nextLine();
         System.out.println("----------------------------------");
         IProduct product = vendingMachine.pressProductButton(productStr);
